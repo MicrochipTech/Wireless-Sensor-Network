@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "IoT_sensor_board_AWS_MQTT", "saml21g18b_sensor_board_demo\IoT_sensor_board_AWS_MQTT.cproj", "{DCE6C7E3-EE26-4D79-826B-08594B9AD897}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "ECC608_provisioning", "ECC608_provisioning\ECC608_provisioning.cproj", "{A0A83575-1BAD-4180-A555-B2C5CAC801ED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Release|ARM = Release|ARM
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Debug|ARM.ActiveCfg = Debug|ARM
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Debug|ARM.Build.0 = Debug|ARM
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Release|ARM.ActiveCfg = Release|ARM
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Release|ARM.Build.0 = Release|ARM
+		{A0A83575-1BAD-4180-A555-B2C5CAC801ED}.Debug|ARM.ActiveCfg = Debug|ARM
+		{A0A83575-1BAD-4180-A555-B2C5CAC801ED}.Debug|ARM.Build.0 = Debug|ARM
+		{A0A83575-1BAD-4180-A555-B2C5CAC801ED}.Release|ARM.ActiveCfg = Release|ARM
+		{A0A83575-1BAD-4180-A555-B2C5CAC801ED}.Release|ARM.Build.0 = Release|ARM
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
