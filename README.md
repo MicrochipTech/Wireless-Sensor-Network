@@ -24,11 +24,32 @@ https://img.shields.io/github/forks/MicrochipTech/Wireless-Sensor-Network.svg) !
 https://img.shields.io/github/stars/MicrochipTech/Wireless-Sensor-Network.svg) 
 
 
-**Table of Contents**
+- [Microchip Wireless Sensor Network](#microchip-wireless-sensor-network)
+  * [Technlogies used](#technlogies-used)
+    + [Web page Front End](#web-page-front-end)
+    + [Data endpoint API](#data-endpoint-api)
+    + [Server hosting](#server-hosting)
+    + [Cloud IoT core](#cloud-iot-core)
+  * [Block diagram](#block-diagram)
+      - [Node location dictionary](#node-location-dictionary)
+      - [MQTT subscriber](#mqtt-subscriber)
+        * [TTN IoT MQQTT client](#ttn-iot-mqqtt-client)
+    + [HTML website](#html-website)
+- [End nodes](#end-nodes)
+    + [Demo summary](#demo-summary)
+    + [Hardware used:](#hardware-used-)
+    + [Firmware update](#firmware-update)
+    + [Software requirements](#software-requirements)
+    + [Provisioning ECC608 device and WINC1500 to your AWS account](#provisioning-ecc608-device-and-winc1500-to-your-aws-account)
+    + [Programming SAML21 to connect and publish to AWS IoT](#programming-saml21-to-connect-and-publish-to-aws-iot)
+      - [AP configuration](#ap-configuration)
+      - [Node name](#node-name)
+      - [sleep code and duration](#sleep-code-and-duration)
+      - [Running the code](#running-the-code)
+    + [Registration Links](#registration-links)
 
-[TOCM]
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
-[TOC]
 
 #Overview
 At MASTERS 2018, we monitored temperatures conference-wide using 3 different networks simultaneously reporting into a single, easily accessible dashboard hosted online to view the information of 34 locations. In addition, for LoRa impelementation we added a golf course node that is placed outside of the hotel to showcase LoRa long range capabilities.
