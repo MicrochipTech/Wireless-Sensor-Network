@@ -243,7 +243,7 @@ myMQTTClient.subscribe("/Microchip/WSN_Demo/MiWi", 1, MiWiCallback)
 app.config['MQTT_BROKER_URL'] = 'us-west.thethings.network'
 app.config['MQTT_BROKER_PORT'] = 1883
 app.config['MQTT_USERNAME'] = 'jwmarriottdesertridge'
-app.config['MQTT_PASSWORD'] = 'ttn-account-v2.HKvWCQlbewY8OZcpe4yV88GxUpYz8QqNuts49Ey58yQ'
+app.config['MQTT_PASSWORD'] = ''
 app.config['MQTT_REFRESH_TIME'] = 1.0  # refresh time in seconds
 mqtt = Mqtt(app)
 

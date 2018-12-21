@@ -180,11 +180,15 @@ void rtc_overflow_callback(void)
 	}
 	if(rtc_timer % 25 == 0)
 	{
+		//if (gu8LedMode == LED_MODE_BLINK_NORMAL)
+			//toggleLED();
 		tick_rotation_data = 1;
 		tick_500ms = 1;
 	}
 	if(rtc_timer % 5 == 0)
 	{
+		//if (gu8LedMode == LED_MODE_BLINK_FAST)
+			//toggleLED();
 		tick_100ms = 1;
 	}
 	

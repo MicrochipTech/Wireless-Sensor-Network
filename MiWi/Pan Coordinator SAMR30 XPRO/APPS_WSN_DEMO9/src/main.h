@@ -11,9 +11,9 @@
 
 #include "driver/include/m2m_wifi.h"
 /** Wi-Fi Settings */
-#define MAIN_WLAN_SSID        "MASTERS" /* < Destination SSID */
+#define MAIN_WLAN_SSID        "MASTERS"
 #define MAIN_WLAN_AUTH        M2M_WIFI_SEC_WPA_PSK /* < Security manner */
-#define MAIN_WLAN_PSK         "microchip"// /* < Password for Destination SSID */
+#define MAIN_WLAN_PSK         "microchip"
 
 #ifdef DEBUG_SUPPORT
 #define DBG_LOG		printf("\r\n");\
@@ -44,10 +44,8 @@ extern bool miwiNewDataArrived;
 #define DEVICE_NAME		"living room"
 #define DEVICE_TYPE		"wifiSensorBoard"//"MiWi-WiFi-Secure(ECC608)-Gateway"//
 
-// Pan Coordinator publishes data to AWS IOT on initialization
-// Below data is dummy values we send
 #define INIT_TEMP  73
-#define CONST_BATTERY "3.0V"  // Battery Status is not implemented hence we send constant values
+#define INIT_BATTERY "3.0V"
 #define INIT_RSSI -87
 #define INIT_NODEID "registration"
 #define AWS_COGNITO_UUID_LEN	60
@@ -63,7 +61,6 @@ typedef struct _wifi_nvm_data {
 	uint8_t uuid[AWS_COGNITO_UUID_LEN];
 } wifi_nvm_data_t;
 
-extern void MQTTSubscribeCBCallbackHandler(int topic_len, char* topic_name, int payload_len, char* payload);
 
 // to be deleted 
 #define TEMP_UPDATE_BIT	(1ul << 0)
@@ -104,6 +101,7 @@ void initialise_led(void);
 void led_ctrl_set_color(Led_Color color, Led_Mode mode);
 void led_ctrl_set_mode(Led_Mode mode);
 void led_ctrl_execute(void);
+void toggleLED(uint8_t val);
 
 typedef struct device_rotation_vector
 {
@@ -132,7 +130,7 @@ void set_motion_sensor_update_timer(unsigned char time);
 #define dev9  "76ae1af626ebf0814d41bd1975c4b3a135715009";
 #define dev8  "82443aa2ce28c18570facbfe625c7d483945af43";
 #define dev7  "b2e86bc436d77f04ff1f500e2a526fd3ca2188a9";
-#define dev6  "0ca2c8a955ff2a30755ee8580818a2ab9aeb529b";  // Configuration Failed
+#define dev6  "0ca2c8a955ff2a30755ee8580818a2ab9aeb529b"; // Configuration Failed
 #define dev5  "7ce4950de1efbb08836aa24688bcd358704de2a4";
 #define dev4  "fecd9d386932f1eda6061cf5ccc8404c34f0ccca";
 #define dev3  "fbe24204bd3e0893d8649e1197f598d63420db49";
@@ -156,19 +154,16 @@ void set_motion_sensor_update_timer(unsigned char time);
 
 
 
-// Each Setup Corresponds to a particular WINC1500+ ECC combo pre-configured to talk to AWS
-// Each setup was placed at different location of building to enable room temperature sensor
-// data to be reported to each PAN COORDINATOR
 
 //#define SETUP0
 //#define SETUP1
 //#define SETUP2
-//#define SETUP3
+#define SETUP3
 //#define SETUP4
 //#define SETUP5
 //#define SETUP6
-//#define SETUP7
+//#define SETUP7 // asda
 //#define SETUP8
 //#define SETUP9
 //#define SETUP10
-#define SETUP11
+//#define SETUP11

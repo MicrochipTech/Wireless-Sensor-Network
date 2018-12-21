@@ -1,0 +1,4 @@
+src/bhi160/bhi160_api/bhy.d src/bhi160/bhi160_api/bhy.o: \
+ ../src/bhi160/bhi160_api/bhy.c ../src/bhi160/bhi160_api/bhy.h
+
+../src/bhi160/bhi160_api/bhy.h:

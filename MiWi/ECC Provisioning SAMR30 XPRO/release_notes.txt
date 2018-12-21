@@ -1,0 +1,14 @@
+Date: 26/21/2018
+Fw Ver: 1.0
+Tag by: Vivek Anchalia / a16023
+
+Description:
+- This is the 1st release of provisioning of ECC508/608 using SAMR30 XPRO
+
+Known issues:
+- 
+
+
+Bug fix:
+- None
+

@@ -84,6 +84,10 @@ MQTTMessageParams Msg;
 MQTTPublishParams Params;
 
 
+
+
+static bool toggle = false;
+
 static void (*mqtt_subscribe_cb)(int topic_len, char* topic_name, int payload_len, char* payload);
 
 
@@ -240,7 +244,6 @@ Cloud_RC cloud_create_topic(char* full_path, char* device_type, char* device_id,
 {
 	IoT_Error_t rc = NONE_ERROR;
 	sprintf(full_path, "/Microchip/WSN_Demo/MiWi\0");
-	
 	return rc;
 	
 }

@@ -170,10 +170,10 @@ wifi_nvm_data_t wifi_nvm_data ={0};
 //to be deleted
 void get_env_sensor_data_for_display(environment_data_t *env_data)
 {
-	env_data->temperature = 32;//gi16Disp_temperature;
-	env_data->humidity = 32;//gu8Disp_humidity;
-	env_data->uv = 32;//gu32Disp_uv;
-	env_data->pressure = 32;//gu16Disp_pressure;
+	env_data->temperature = 32;//Ignore
+	env_data->humidity = 32;//Ignore
+	env_data->uv = 32;//Ignore
+	env_data->pressure = 32;//Ignore
 	
 }
 unsigned char rotation_data_timer;
@@ -244,23 +244,23 @@ static void MiWiSensorCallbackHandler(environment_data_t sensor_data, unsigned c
 	cJSON* item;
 	NodeInfo node_info[4];
 	int8_t cnt = 0;
-	
+
 	if (flag & TEMP_UPDATE_BIT)
 	{
 		strcpy(node_info[cnt].dataType,MIWI_TEMP_DATATYPE_NAME);
-		node_info[cnt].value = miwiNodeTemp;//sensor_data.humidity;
+		node_info[cnt].value = miwiNodeTemp;
 		cnt++;
 	}
 	if (flag & UV_UPDATE_BIT)
 	{
 		strcpy(node_info[cnt].dataType,MIWI_RSSI_DATATYPE_NAME);
-		node_info[cnt].value = miwiNodeRssi;//32;sensor_data.uv;
+		node_info[cnt].value = miwiNodeRssi;
 		cnt++;
 	}
 	if (flag & PRESSURE_UPDATE_BIT)
 	{
 		strcpy(node_info[cnt].dataType,MIWI_BATTERY_DATATYPE_NAME);
-		node_info[cnt].value = miwiNodeBatteryStatus;//sensor_data.pressure;
+		node_info[cnt].value = miwiNodeBatteryStatus;
 		cnt++;
 	}
 	
@@ -305,8 +305,6 @@ void env_sensor_execute()
 	
 	environment_data_t environment_data;
 	get_env_sensor_data_from_chip(&environment_data);
-	//printf("DBG: temperature = %d, humidity = %d, uv = %lu, pressure = %d\r\n", environment_data.temperature, environment_data.humidity, environment_data.uv, environment_data.pressure);
-	
 	// check temperature
 	if (pre_temp != environment_data.temperature)
 	{
@@ -350,7 +348,6 @@ void env_sensor_execute()
 		uv_not_equal_cnt = 0;
 	}
 	if (((uv_cnt >= UV_DISP_COUNTER) && gu32Disp_uv!= pre_uv) || (uv_not_equal_cnt >1))
-	//if (((uv_cnt >= UV_DISP_COUNTER) && gu32Disp_uv!= pre_uv))
 	{
 		gu32Disp_uv = pre_uv;
 		updateFlag |= UV_UPDATE_BIT;
@@ -375,99 +372,6 @@ void env_sensor_execute()
 
 	env_sensor_update_cb(environment_data, updateFlag);
 	
-}
-void MQTTSubscribeCBCallbackHandler(int topic_len, char* topic_name, int payload_len, char* payload)
-{
-	printf("%s In\n", __func__);
-	printf("%.*s\t%.*s",
-	topic_len, topic_name, payload_len, payload);
-	printf("\n\r");
-	
-
-	cJSON* item=NULL;
-	char data_type[30];
-	int data_value;
-
-	
-	Iot_Msg_Command cmd = iot_message_parser_cmd_type(payload);
-	if (cmd == MSG_CMD_UPDATE)
-	{
-		int info_cnt = iot_message_get_info_count(payload);
-		
-		for (int i=0; i<info_cnt; i++)
-		{
-			iot_message_parser_info_data(payload, i, data_type, &data_value);
-			printf("info --- dataType: %s, val: %d\n", data_type, data_value);
-			
-			switch (data_value)
-			{
-				case 0:
-					//led_ctrl_set_color(LED_COLOR_BLUE, LED_MODE_NONE);
-					break;
-				case 1:
-					//led_ctrl_set_color(LED_COLOR_GREEN, LED_MODE_NONE);
-					break;
-				case 2:
-					//led_ctrl_set_color(LED_COLOR_YELLOW, LED_MODE_NONE);
-					break;
-					
-			}
-			
-			return;
-		}
-	}
-	else if (cmd == MSG_CMD_SEARCH)
-	{
-		
-		//item = iot_message_searchResp(DEVICE_TYPE,gAwsMqttClientId);
-		environment_data_t env_data;
-		get_env_sensor_data_for_display(&env_data);
-		DBG_LOG("DBG: temperature = %d, humidity = %d, uv = %d, pressure = %d\r\n", env_data.temperature, env_data.humidity, env_data.uv, env_data.pressure);
-		
-		item = iot_message_searchResp_with_temp_uv(DEVICE_TYPE,gAwsMqttClientId, env_data.temperature, env_data.uv);
-		cloud_mqtt_publish(gSearchResp_Channel,item);
-	}
-	else if (cmd == MSG_CMD_GET)
-	{
-		environment_data_t env_data;
-		get_env_sensor_data_for_display(&env_data);
-		
-		DBG_LOG("DBG: temperature = %d, humidity = %d, uv = %d, pressure = %d\r\n", env_data.temperature, env_data.humidity, env_data.uv, env_data.pressure);
-		
-		NodeInfo info[5];
-		
-		strcpy(info[0].dataType,TEMP_DATATYPE_NAME);
-		info[0].value = (int) 32;//env_data.temperature;
-		
-		strcpy(info[1].dataType,HUM_DATATYPE_NAME);
-		info[1].value = (int) 32;//env_data.humidity;
-		
-		strcpy(info[2].dataType,UV_DATATYPE_NAME);
-		info[2].value = (int) 32;//env_data.uv;
-		
-		strcpy(info[3].dataType,PRESSURE_DATATYPE_NAME);
-		info[3].value = (int) 32;//env_data.pressure;
-		
-		strcpy(info[4].dataType,LED1_DATATYPE_NAME);
-		Led_Color color = 32;//led_ctrl_get_color();
-		if (color == LED_COLOR_YELLOW)	//align with the mobile APP option number, yellow is option number 2, blue is 0 and green is 1
-			color = 2;	
-		info[4].value = color;
-		
-		
-		item = iot_message_reportAllInfo(DEVICE_TYPE, gAwsMqttClientId, 5, info);
-		cloud_mqtt_publish(gPublish_Channel,item);
-		
-	}
-	else if (cmd == MSG_SUBCMD_GET_3D_PLOT_DATA)
-	{
-		set_motion_sensor_update_timer(5);
-	}
-	
-	if (item!=NULL)
-		cJSON_Delete(item);
-	
-	return 0;
 }
 
 static void set_dev_param_to_mac(uint8 *param, uint8 *addr, uint8_t offset)
@@ -1078,7 +982,6 @@ int wifiCryptoInit(void)
 	gDefaultSSID[strlen(MAIN_WLAN_SSID)]=0;
 	gDefaultKey[strlen(MAIN_WLAN_PSK)]=0;
 	
-	//register_env_sensor_udpate_callback_handler(EnvSensorCallbackHandler);
 	register_env_sensor_udpate_callback_handler(MiWiSensorCallbackHandler);
 
 	DBG_LOG("connecting AP, ssid = %s , pwd= %s\n", (char *)gDefaultSSID,(char *)gDefaultKey);

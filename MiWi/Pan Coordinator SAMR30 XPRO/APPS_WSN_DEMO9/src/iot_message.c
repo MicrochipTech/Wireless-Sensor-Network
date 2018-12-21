@@ -320,9 +320,11 @@ cJSON* iot_message_searchResp(char* device_type, char* mac_addr)
 cJSON* iot_message_reportAllInfo(char* device_type, char* mac_addr, int num_of_data, NodeInfo data[])
 {
 	cJSON *json2CloudData;
+	cJSON *json2CloudNodeData;
 	cJSON *json2CloudDataArray1;
 	
 	json2CloudData=cJSON_CreateObject();
+	//json2CloudNodeData=cJSON_CreateObject();
 	json2CloudDataArray1=cJSON_CreateArray();
 
 	if((json2CloudData == NULL) || (json2CloudDataArray1 == NULL))
@@ -332,7 +334,7 @@ cJSON* iot_message_reportAllInfo(char* device_type, char* mac_addr, int num_of_d
 	}
 	// WSN MiWi
 
-	cJSON_AddStringToObject(json2CloudData, MIWI_BATTERY_DATATYPE_NAME, CONST_BATTERY);
+	cJSON_AddStringToObject(json2CloudData, MIWI_BATTERY_DATATYPE_NAME, INIT_BATTERY);
 	cJSON_AddStringToObject(json2CloudData, MIWI_RSSI_DATATYPE_NAME, INIT_RSSI);
 	cJSON_AddStringToObject(json2CloudData, MIWI_TEMP_DATATYPE_NAME, INIT_TEMP);
 	cJSON_AddStringToObject(json2CloudData, MIWI_NODEID_DATATYPE_NAME, INIT_NODEID);
@@ -345,6 +347,7 @@ cJSON* iot_message_reportAllInfo(char* device_type, char* mac_addr, int num_of_d
 cJSON* iot_message_reportInfo(char* device_type, char* mac_addr, int report_data_num, NodeInfo data_info[])
 {
 	cJSON *json2CloudData;
+	cJSON *json2CloudNodeData;
 	cJSON *json2CloudDataArray1;
 	
 	json2CloudData=cJSON_CreateObject();
@@ -357,18 +360,19 @@ cJSON* iot_message_reportInfo(char* device_type, char* mac_addr, int report_data
 	}
 	if (miwiNodeTemp > 0)
 	{
-		cJSON_AddStringToObject(json2CloudData, MIWI_BATTERY_DATATYPE_NAME, CONST_BATTERY);
+		cJSON_AddStringToObject(json2CloudData, MIWI_BATTERY_DATATYPE_NAME, INIT_BATTERY); // Fixed Battery Value is sent
 		cJSON_AddNumberToObject(json2CloudData, MIWI_RSSI_DATATYPE_NAME, miwiNodeRssi);
 		cJSON_AddNumberToObject(json2CloudData, MIWI_TEMP_DATATYPE_NAME, miwiNodeTemp);
 		cJSON_AddStringToObject(json2CloudData, MIWI_NODEID_DATATYPE_NAME, miwiNodeLocation);
 	}
 	else
 	{
-		cJSON_AddStringToObject(json2CloudData, MIWI_BATTERY_DATATYPE_NAME, CONST_BATTERY);
+		cJSON_AddStringToObject(json2CloudData, MIWI_BATTERY_DATATYPE_NAME, INIT_BATTERY);
 		cJSON_AddNumberToObject(json2CloudData, MIWI_RSSI_DATATYPE_NAME, INIT_RSSI);
 		cJSON_AddNumberToObject(json2CloudData, MIWI_TEMP_DATATYPE_NAME, INIT_TEMP);
 		cJSON_AddStringToObject(json2CloudData, MIWI_NODEID_DATATYPE_NAME, INIT_NODEID);
 	}
+
 	return json2CloudData;
 }
 
@@ -395,8 +399,6 @@ cJSON* iot_message_reportDisconnect(int report_dev_num, NodeInfo endnode_info[])
 	for (int i=0; i<report_dev_num; i++)
 	{
 		json2CloudNodeData=cJSON_CreateObject();
-		
-		//cJSON_AddStringToObject(json2CloudNodeData, "devName", endnode_info[i].dev_name);
 		
 		cJSON_AddItemToArray(json2CloudDataArray1, json2CloudNodeData);
 	}

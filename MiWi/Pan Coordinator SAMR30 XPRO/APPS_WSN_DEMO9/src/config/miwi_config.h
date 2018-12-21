@@ -105,13 +105,9 @@
     /*********************************************************************/
     //#define PROTOCOL_STAR      
 
-// For the Purpose of Demo MiWi P2P stack was modified to work as Star network Topology
-// We only use ED (end device) and PC (pan coordinator) for the demo
-// Ignore R (router) 
-
-//#define ED // End Device
-//#define R // Router
-#define PC  // Pan Coordinator 
+//#define ED
+//#define R
+#define PC
 
 
 //------------------------------------------------------------------------

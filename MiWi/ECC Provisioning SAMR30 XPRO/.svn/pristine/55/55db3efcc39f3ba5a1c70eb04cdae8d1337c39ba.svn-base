@@ -1,0 +1,895 @@
+/**
+* \file
+*
+* \brief Multi-Role/Multi-Connect Application
+*
+* Copyright (c) 2016 Atmel Corporation. All rights reserved.
+*
+* \asf_license_start
+*
+* \page License
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* 1. Redistributions of source code must retain the above copyright notice,
+*    this list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright notice,
+*    this list of conditions and the following disclaimer in the documentation
+*    and/or other materials provided with the distribution.
+*
+* 3. The name of Atmel may not be used to endorse or promote products derived
+*    from this software without specific prior written permission.
+*
+* 4. This software may only be redistributed and used in connection with an
+*    Atmel micro controller product.
+*
+* THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
+* WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+* EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
+* ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+* OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+* STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*
+* \asf_license_stop
+*
+*/
+
+/*
+* Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel
+*Support</a>
+*/
+
+/**
+* \mainpage
+* \section preface Preface
+* This is the reference manual for the Multi-Role/Multi-Connect Application
+*/
+/*- Includes ---------------------------------------------------------------*/
+
+#include <asf.h>
+#include "driver/include/m2m_wifi.h"
+#include "socket/include/socket.h"
+#include "string.h"
+#include "AWS_SDK/aws_iot_src/utils/aws_iot_log.h"
+#include "AWS_SDK/aws_iot_src/utils/aws_iot_version.h"
+#include "AWS_SDK/aws_iot_src/protocol/mqtt/aws_iot_mqtt_interface.h"
+#include "winc15x0.h"
+#include "iot_message.h"
+#include "cJSON.h"
+#include "cloud_wrapper.h"
+//#include "button_handle.h"
+#include "cmdset.h"
+#include "gateway_prov.h"
+#include "led.h"
+#include "wearable.h"
+#include "env_sensor.h"
+#include "motion_sensor.h"
+#include "nvm_handle.h"
+#include "main.h"
+
+uint8_t gMacaddr[M2M_MAC_ADDRES_LEN];
+uint8 gDefaultSSID[M2M_MAX_SSID_LEN] = {0};
+uint8 gAuthType = M2M_WIFI_SEC_INVALID;
+uint8 gDefaultKey[M2M_MAX_PSK_LEN] = {0};
+uint8 gUuid[AWS_COGNITO_UUID_LEN] = {0};
+
+/** Wi-Fi status variable. */
+bool gbConnectedWifi = false,receivedTime = false;
+
+wifi_FSM_states wifi_states = WIFI_TASK_SWITCHING_TO_STA;
+
+#define PUBLISH_BUTTON	SW0_PIN
+
+int detSw0Sock = -1;	//detect sw0 socket
+
+uint8 gu8WiFiMode = APP_STA;
+static SOCKET provServerSocket = -1;
+static uint8 gau8RxBuffer[SOCKET_BUFFER_MAX_LENGTH] = {0};
+static uint8_t gAPEnabled = 0;
+
+#define SOCK_TIMEOUT                   0x927C0 // 10min	
+	
+MQTTConnectParams connectParams;
+MQTTSubscribeParams subParams;
+MQTTMessageParams Msg;
+MQTTPublishParams Params;
+
+
+extern NodeInfo multiSpkDevice;
+
+wifi_nvm_data_t wifi_nvm_data ={0};
+
+
+#define WIFI_UPDATE_DEVICE_STATUS_TIME			(2000)
+
+
+
+
+static void motionSensorCallbackHandler(device_rotation_vector_t rotation_data, unsigned char flag)
+{
+	cJSON* item;
+	NodeInfo node_info[4];
+	
+	strcpy(node_info[0].dataType,ROTATION_W_DATATYPE_NAME);
+	node_info[0].value = (int) rotation_data.w;
+	strcpy(node_info[1].dataType,ROTATION_X_DATATYPE_NAME);
+	node_info[1].value = (int) rotation_data.x;
+	strcpy(node_info[2].dataType,ROTATION_Y_DATATYPE_NAME);
+	node_info[2].value = (int) rotation_data.y;
+	strcpy(node_info[3].dataType,ROTATION_Z_DATATYPE_NAME);
+	node_info[3].value = (int) rotation_data.z;
+	
+	item = iot_message_reportInfo(DEVICE_TYPE, gAwsMqttClientId, 4, &node_info);
+	cloud_mqtt_publish(gPublish_Channel,item);
+	cJSON_Delete(item);
+
+}
+
+static void EnvSensorCallbackHandler(environment_data_t sensor_data, unsigned char flag)
+{
+	cJSON* item;
+	NodeInfo node_info[4];
+	int8_t cnt = 0;
+	
+	if (flag & TEMP_UPDATE_BIT)
+	{
+		strcpy(node_info[cnt].dataType,TEMP_DATATYPE_NAME);
+		node_info[cnt].value = sensor_data.temperature;
+		cnt++;
+	}
+	if (flag & HUM_UPDATE_BIT)
+	{
+		strcpy(node_info[cnt].dataType,HUM_DATATYPE_NAME);
+		node_info[cnt].value = sensor_data.humidity;
+		cnt++;
+	}
+	if (flag & UV_UPDATE_BIT)
+	{
+		strcpy(node_info[cnt].dataType,UV_DATATYPE_NAME);
+		node_info[cnt].value = sensor_data.uv;
+		cnt++;
+	}
+	if (flag & PRESSURE_UPDATE_BIT)
+	{
+		strcpy(node_info[cnt].dataType,PRESSURE_DATATYPE_NAME);
+		node_info[cnt].value = sensor_data.pressure;
+		cnt++;
+	}
+	
+	item = iot_message_reportInfo(DEVICE_TYPE, gAwsMqttClientId, cnt, &node_info);
+	cloud_mqtt_publish(gPublish_Channel,item);
+	cloud_mqtt_publish(gSearchResp_Channel,item);
+	cJSON_Delete(item);
+}
+
+
+static void MQTTSubscribeCBCallbackHandler(int topic_len, char* topic_name, int payload_len, char* payload)
+{
+	printf("%s In\n", __func__);
+	printf("%.*s\t%.*s",
+	topic_len, topic_name, payload_len, payload);
+	printf("\n\r");
+	
+
+	cJSON* item=NULL;
+	char data_type[30];
+	int data_value;
+
+	
+	Iot_Msg_Command cmd = iot_message_parser_cmd_type(payload);
+	if (cmd == MSG_CMD_UPDATE)
+	{
+		int info_cnt = iot_message_get_info_count(payload);
+		
+		for (int i=0; i<info_cnt; i++)
+		{
+			iot_message_parser_info_data(payload, i, data_type, &data_value);
+			printf("info --- dataType: %s, val: %d\n", data_type, data_value);
+			
+			switch (data_value)
+			{
+				case 0:
+					led_ctrl_set_color(LED_COLOR_BLUE, LED_MODE_NONE);
+					break;
+				case 1:
+					led_ctrl_set_color(LED_COLOR_GREEN, LED_MODE_NONE);
+					break;
+				case 2:
+					led_ctrl_set_color(LED_COLOR_YELLOW, LED_MODE_NONE);
+					break;
+					
+			}
+			
+			return;
+		}
+	}
+	else if (cmd == MSG_CMD_SEARCH)
+	{
+		
+		//item = iot_message_searchResp(DEVICE_TYPE,gAwsMqttClientId);
+		environment_data_t env_data;
+		get_env_sensor_data_for_display(&env_data);
+		DBG_LOG("DBG: temperature = %d, humidity = %d, uv = %d, pressure = %d\r\n", env_data.temperature, env_data.humidity, env_data.uv, env_data.pressure);
+		
+		item = iot_message_searchResp_with_temp_uv(DEVICE_TYPE,gAwsMqttClientId, env_data.temperature, env_data.uv);
+		cloud_mqtt_publish(gSearchResp_Channel,item);
+	}
+	else if (cmd == MSG_CMD_GET)
+	{
+		environment_data_t env_data;
+		get_env_sensor_data_for_display(&env_data);
+		
+		DBG_LOG("DBG: temperature = %d, humidity = %d, uv = %d, pressure = %d\r\n", env_data.temperature, env_data.humidity, env_data.uv, env_data.pressure);
+		
+		NodeInfo info[5];
+		
+		strcpy(info[0].dataType,TEMP_DATATYPE_NAME);
+		info[0].value = (int) env_data.temperature;
+		
+		strcpy(info[1].dataType,HUM_DATATYPE_NAME);
+		info[1].value = (int) env_data.humidity;
+		
+		strcpy(info[2].dataType,UV_DATATYPE_NAME);
+		info[2].value = (int) env_data.uv;
+		
+		strcpy(info[3].dataType,PRESSURE_DATATYPE_NAME);
+		info[3].value = (int) env_data.pressure;
+		
+		strcpy(info[4].dataType,LED1_DATATYPE_NAME);
+		Led_Color color = led_ctrl_get_color();
+		if (color == LED_COLOR_YELLOW)	//align with the mobile APP option number, yellow is option number 2, blue is 0 and green is 1
+			color = 2;	
+		info[4].value = color;
+		
+		
+		item = iot_message_reportAllInfo(DEVICE_TYPE, gAwsMqttClientId, 5, info);
+		cloud_mqtt_publish(gPublish_Channel,item);
+		
+	}
+	else if (cmd == MSG_SUBCMD_GET_3D_PLOT_DATA)
+	{
+		set_motion_sensor_update_timer(5);
+	}
+	
+	if (item!=NULL)
+		cJSON_Delete(item);
+	
+	return 0;
+}
+
+static void set_dev_param_to_mac(uint8 *param, uint8 *addr, uint8_t offset)
+{
+	/* Name must be in the format AtmelSmartPlug000000 */
+	uint16 len;
+
+	len = m2m_strlen(param);
+	if (len >= offset) {
+		param[len - 1] = HEX2ASCII((addr[5] >> 0) & 0x0f);
+		param[len - 2] = HEX2ASCII((addr[5] >> 4) & 0x0f);
+		param[len - 3] = HEX2ASCII((addr[4] >> 0) & 0x0f);
+		param[len - 4] = HEX2ASCII((addr[4] >> 4) & 0x0f);
+		param[len - 5] = HEX2ASCII((addr[3] >> 0) & 0x0f);
+		param[len - 6] = HEX2ASCII((addr[3] >> 4) & 0x0f);
+	}
+}
+
+static void close_app_socket(void)
+{
+	int8_t ret = M2M_SUCCESS;
+
+	if (provServerSocket != -1) {
+		ret = close(provServerSocket);
+		printf("[AP] TCP server socket %d closed %d!\r\n", provServerSocket, ret);
+		provServerSocket = -1;
+	}
+	return;
+}
+
+static void start_AP_app(void)
+{
+	struct sockaddr_in	addr;
+	int ret = -1;
+	
+	/* TCP Server. */
+	if(provServerSocket == -1) {
+		if((provServerSocket = socket(AF_INET, SOCK_STREAM, 0)) >= 0) {
+			// Initialize socket address structure.
+			addr.sin_family      = AF_INET;
+			addr.sin_port        = _htons(AP_TCP_SERVER_PORT);
+			addr.sin_addr.s_addr = 0;
+
+			if((ret = bind(provServerSocket, (struct sockaddr*)&addr, sizeof(addr))) == 0) {
+				M2M_INFO("[AP] TCP socket bind success!\r\n");
+			}
+			else {
+				M2M_INFO("[AP] Bind Failed. Error code = %d\r\n", ret);
+				close(provServerSocket);
+				M2M_INFO("[AP] TCP server socket %d closed!\r\n", provServerSocket);
+				provServerSocket = -1;
+			}
+		}
+		else {
+			M2M_INFO("[AP] TCP Server Socket Creation Failed\r\n");
+			return;
+		}
+	}
+	else {
+		accept(provServerSocket, NULL, 0);
+	}
+}
+
+
+static void wifiSwitchtoSTA(void)
+{
+	int8_t ret;
+	
+	close_app_socket();
+	if (gAPEnabled) {
+		ret = m2m_wifi_disable_ap();
+		if (M2M_SUCCESS != ret) {
+			printf("main: m2m_wifi_disable_ap call error!\r\n");
+			return;
+		}
+		else {
+			printf("main: m2m_wifi_disable_ap call success!\r\n");
+		}
+		gAPEnabled = 0;
+		nm_bsp_sleep(500);
+	}
+	if (wifi_states == WIFI_TASK_AP_CONNECTED) {
+		// If there is station connected, wait M2M_WIFI_DISCONNECTED event
+		printf("main: WIFI_TASK_SWITCHING_TO_STA\r\n");
+		wifi_states = WIFI_TASK_SWITCHING_TO_STA;
+	}
+	else {
+		printf("main: m2m_wifi_connect \r\n");
+		ret = m2m_wifi_connect((char *)gDefaultSSID, strlen((char *)gDefaultSSID), \
+		gAuthType, (char *)gDefaultKey, M2M_WIFI_CH_ALL);
+		if (M2M_SUCCESS != ret) {
+			printf("main: m2m_wifi_connect call error!\r\n");
+			while (1) {
+			}
+		}
+		gu8WiFiMode = APP_STA;
+		wifi_states = WIFI_TASK_IDLE;
+		set_prov_state(STA_INIT);
+	}
+}
+
+static void parse_cmd_frame(SOCKET sock, uint8 *provbuffer)
+{
+	uint16_t cmd_length = _get_u16(provbuffer + CMD_LEN_OFFSET) + SOF_LEN + CMDLNTH_LEN;
+	if (cmd_length > MIN_CMD_LEN && cmd_length < SOCKET_BUFFER_MAX_LENGTH){
+		//CRC32 checksum
+		uint32_t chksum = 0;
+		//To: Add the checksum
+		//crc32_calculate(provbuffer, cmd_length, &chksum);
+		//uint32_t rx_chksum = _get_u32(provbuffer + cmd_length);
+		uint32_t rx_chksum = 0;
+		if (chksum == rx_chksum) {
+			//M2M_INFO("CRC pass\r\n");
+			uint8_t cmd_id =  *(provbuffer + CMD_ID_OFFSET);
+			cmd_resp_t cmd_response;
+			memset(&cmd_response, 0, sizeof(cmd_response));
+			// Parse IoT command
+			parse_iot_cmd(sock, cmd_id, provbuffer + CMD_PARAM_OFFSET, &cmd_response);
+			// Fill seq number
+			cmd_response.data.base[CMD_SEQ_OFFSET] = *(provbuffer + CMD_SEQ_OFFSET);
+			
+			//To Do: Add checksum
+			//crc32_calculate(cmd_response.data.base, cmd_response.length, &msg_check_sum);
+			//memcpy(&cmd_response.data.base[cmd_response.length], &msg_check_sum, CHECKSUM_LEN);
+			{
+				DBG_LOG("send data, len = %d\r\n",cmd_response.length);
+				//send(sock, (void *)cmd_response.data.base, \
+				//cmd_response.length + CHECKSUM_LEN, 0);
+				//if (cmd_response.length == 19)
+				{
+					DBG_LOG("send !!\r\n");
+					send(sock, (void *)cmd_response.data.base, \
+					cmd_response.length, 0);
+				}
+			}
+			if (get_prov_state() == PROV_DONE) {
+				nm_bsp_sleep(500);
+				// Store WiFi information in NVM before connecting.
+				wifi_nvm_data.ssidlen = strlen((char *)gDefaultSSID);
+				printf("SSID len=%d\r\n", wifi_nvm_data.ssidlen);
+				memcpy(wifi_nvm_data.ssid, gDefaultSSID, wifi_nvm_data.ssidlen);
+				printf("SSID =%s\r\n", wifi_nvm_data.ssid);
+				wifi_nvm_data.keylen = strlen((char *)gDefaultKey);
+				memcpy(wifi_nvm_data.key, gDefaultKey, wifi_nvm_data.keylen);
+				wifi_nvm_data.authtype = gAuthType;
+				wifi_nvm_data.valid = 1;
+				memcpy(wifi_nvm_data.uuid,gUuid,strlen(gUuid));
+				
+				//To Do:
+				// Save wifi_nvm_data to flash
+				nvm_store_config_data(wifi_nvm_data);
+				///nv_flash_write(CONFIG_PAGE_ADDRESS,CONFIG_PAGE,(uint32_t*)(&wifi_nvm_data),sizeof(wifi_nvm_data));
+				printf("Write config page\r\n");
+				nvm_get_config_data(&wifi_nvm_data);
+				printf("DBG SSID=%s\r\n", wifi_nvm_data.ssid);
+				//To Do: 
+				//Switch to STA mode after NVM store.
+				wifiSwitchtoSTA();
+			}
+		}
+		else {
+			//send(get_session(session_num)->sock, (void *)"Checksum error!", strlen("Checksum error!"), 0);
+		}
+	}
+	else {
+		//send(get_session(session_num)->sock, (void *)"Msg length error!", strlen("Msg length error!"), 0);
+	}
+}
+
+
+
+static void tcpsendresponse(SOCKET sock, tstrSocketRecvMsg *pstrRx)
+{
+	uint8 *provbuffer = pstrRx->pu8Buffer;
+	
+	if (provbuffer[0] == SOF_INDICATER) {
+		// Plain text frame
+		{
+			parse_cmd_frame(sock, provbuffer);
+		}
+	}
+	
+}
+
+/**
+ * \brief Callback to get the Data from socket.
+ *
+ * \param[in] sock socket handler.
+ * \param[in] u8Msg socket event type. Possible values are:
+ *  - SOCKET_MSG_BIND
+ *  - SOCKET_MSG_LISTEN
+ *  - SOCKET_MSG_ACCEPT
+ *  - SOCKET_MSG_CONNECT
+ *  - SOCKET_MSG_RECV
+ *  - SOCKET_MSG_SEND
+ *  - SOCKET_MSG_SENDTO
+ *  - SOCKET_MSG_RECVFROM
+ * \param[in] pvMsg is a pointer to message structure. Existing types are:
+ *  - tstrSocketBindMsg
+ *  - tstrSocketListenMsg
+ *  - tstrSocketAcceptMsg
+ *  - tstrSocketConnectMsg
+ *  - tstrSocketRecvMsg
+ */
+
+static void m2m_wifi_socket_handler(SOCKET sock, uint8 u8Msg, void *pvMsg)
+{
+	int ret =-1;
+	M2M_INFO(" %s In\n", __func__);("socket %d, event %d!\r\n", sock, u8Msg);
+	switch (u8Msg) {
+		case SOCKET_MSG_BIND:
+		{
+			/* TCP socket */
+			if (provServerSocket == sock) {
+				tstrSocketBindMsg *pstrBind = (tstrSocketBindMsg*)pvMsg;
+				if(pstrBind != NULL && pstrBind->status == 0) {
+					ret = listen(sock, 0);
+					if(ret < 0) {
+						M2M_INFO("Listen failure! Error = %d\r\n", ret);
+					}
+					else {
+						M2M_INFO("TCP socket %d listen!\r\n", sock);
+					}
+				}
+				else {
+					if (pstrBind->status != 0) M2M_INFO("TCP bind error %d!\r\n", pstrBind->status);
+				}
+			}
+		}
+		break;
+  
+		case SOCKET_MSG_LISTEN:
+		{
+			if (provServerSocket == sock) {
+				tstrSocketListenMsg	*pstrListen = (tstrSocketListenMsg*)pvMsg;
+				if(pstrListen != NULL && pstrListen->status == 0) {
+					ret = accept(sock, NULL, 0);
+					M2M_INFO("TCP socket %d accept!\r\n", sock);
+				}
+				else {
+					if (pstrListen->status != 0) M2M_INFO("TCP listen error %d!\r\n", pstrListen->status);
+				}
+			}
+		}
+		break;
+  
+		case SOCKET_MSG_ACCEPT:
+		{
+			if (provServerSocket == sock) {
+				tstrSocketAcceptMsg *pstrAccept = (tstrSocketAcceptMsg*)pvMsg;
+				if(pstrAccept) {
+					if (pstrAccept->sock >= 0) {
+						#if 0
+						uint8_t i = 0; 
+						for (i = 0; i < 7; i++) {
+							session_t* tcp_session = get_session(i);
+							if (tcp_session->sock == -1) {
+								tcp_session->sock = pstrAccept->sock;
+								M2M_INFO("TCP data socket [%d]%d accepted!\r\n", i, tcp_session->sock);
+								break;
+							}
+						}
+						if (i >= 7) {
+							M2M_INFO("TCP socket full!\r\n");
+							return;
+						}		
+						#endif				
+						recv(pstrAccept->sock, gau8RxBuffer, sizeof(gau8RxBuffer), 0);
+					}
+					else {
+						M2M_INFO("accept sock error\r\n");
+					}
+				}
+				else {
+					M2M_INFO("accept error\r\n");
+				}
+			}
+		}
+		break;
+  
+		case SOCKET_MSG_SEND:
+		{
+			int16_t s16Sent = *((int16_t*)pvMsg);
+			if(s16Sent != 0) {
+				//WINC_PRINT("MSG_SEND %d bytes!\r\n", s16Sent);
+			}
+		}
+		break;
+  
+		case SOCKET_MSG_RECV:
+		{
+			tstrSocketRecvMsg *pstrRx = (tstrSocketRecvMsg*)pvMsg;
+			if (pstrRx) {
+				if(pstrRx->pu8Buffer != NULL && pstrRx->s16BufferSize) {
+					//tcpsendresponse(sock, pstrRx);
+					printf("message = %s\r\n",pstrRx->pu8Buffer);
+					tcpsendresponse(sock, pstrRx);
+					recv(sock, gau8RxBuffer, sizeof(gau8RxBuffer), SOCK_TIMEOUT);
+				}
+				else {
+					M2M_INFO("TCP Socket %d error: %d!\r\n", sock, pstrRx->s16BufferSize);
+				}
+			}
+			else {
+				M2M_INFO("Empty stream!\r\n");
+				recv(sock, gau8RxBuffer, sizeof(gau8RxBuffer), 0);
+			}
+		}
+		break;
+		
+		case SOCKET_MSG_SENDTO:
+		{
+			int16_t s16Sent = *((int16_t*)pvMsg);
+			if(s16Sent != 0) {
+				//WINC_PRINT("MSG_SENDTO %d bytes!\r\n", s16Sent);
+			}
+		}
+		break;
+		
+		case SOCKET_MSG_RECVFROM:
+		
+		break;
+		
+		default:
+			//WINC_PRINT("Other socket handler\r\n");
+			if (u8Msg > SOCKET_MSG_RECVFROM) {
+				M2M_INFO("Unknown state %d\r\n", u8Msg);
+			}
+			else {
+				M2M_INFO("Not handled state %d\r\n", u8Msg);
+			}
+		break;
+	}
+}
+
+/**
+ * \brief Callback to get the Wi-Fi status update.
+ *
+ * \param[in] u8MsgType type of Wi-Fi notification. Possible types are:
+ *  - [M2M_WIFI_RESP_CON_STATE_CHANGED](@ref M2M_WIFI_RESP_CON_STATE_CHANGED)
+ *  - [M2M_WIFI_REQ_DHCP_CONF](@ref M2M_WIFI_REQ_DHCP_CONF)
+ * \param[in] pvMsg A pointer to a buffer containing the notification parameters
+ * (if any). It should be casted to the correct data type corresponding to the
+ * notification type.
+ */
+static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
+{
+	switch (u8MsgType) {
+	case M2M_WIFI_RESP_CON_STATE_CHANGED:
+	{
+		tstrM2mWifiStateChanged *pstrWifiState = (tstrM2mWifiStateChanged *)pvMsg;
+		if (pstrWifiState->u8CurrState == M2M_WIFI_CONNECTED) {
+			printf("wifi_cb: M2M_WIFI_RESP_CON_STATE_CHANGED: CONNECTED\r\n");
+			m2m_wifi_request_dhcp_client();
+		} else if (pstrWifiState->u8CurrState == M2M_WIFI_DISCONNECTED) {
+			printf("wifi_cb: M2M_WIFI_RESP_CON_STATE_CHANGED: DISCONNECTED\r\n");
+			if (gu8WiFiMode == APP_AP)
+			{
+				if (wifi_states == WIFI_TASK_SWITCHING_TO_STA) {
+					wifi_states = WIFI_TASK_STA_DISCONNECTED;
+					printf("Switching to STA mode!\r\n");
+					led_ctrl_set_color(LED_COLOR_BLUE, LED_MODE_BLINK_NORMAL);
+					wifiSwitchtoSTA();	// Switch to STA mode if required
+				}
+			}
+			else
+			{
+				gbConnectedWifi = false;
+				m2m_wifi_connect((char *)gDefaultSSID, strlen((char *)gDefaultSSID), \
+				gAuthType, (char *)gDefaultKey, M2M_WIFI_CH_ALL);
+			}
+		}
+
+		break;
+	}
+
+	case M2M_WIFI_REQ_DHCP_CONF:
+	{
+		uint8_t *pu8IPAddress = (uint8_t *)pvMsg;
+		/* Turn LED0 on to declare that IP address received. */
+		printf("wifi_cb: M2M_WIFI_REQ_DHCP_CONF: IP is %u.%u.%u.%u\r\n",
+				pu8IPAddress[0], pu8IPAddress[1], pu8IPAddress[2], pu8IPAddress[3]);
+		gbConnectedWifi = true;
+
+		led_ctrl_set_mode(LED_MODE_BLINK_FAST);
+		/* Obtain the IP Address by network name */
+		///gethostbyname((uint8_t *)HostAddress);
+		if (gu8WiFiMode == APP_AP)
+		{
+			start_AP_app();
+			wifi_states = WIFI_TASK_AP_CONNECTED;
+		}
+		else
+			m2m_wifi_get_sytem_time();
+		break;
+	}
+	
+	case M2M_WIFI_RESP_GET_SYS_TIME:
+	{
+		printf("Received time\r\n");
+		receivedTime = true;
+		wifi_states = WIFI_TASK_CONNECT_CLOUD;
+	}
+
+	default:
+	{
+		break;
+	}
+	}
+}
+
+
+
+static void wifiSwitchtoAP(void)
+{
+	int8_t ret;
+	static uint8_t mac_addr[M2M_MAC_ADDRES_LEN];
+	
+	tstrM2MAPConfig strM2MAPConfig;
+	/* Initialize AP mode parameters structure with SSID, channel and security type. */
+	memset(&strM2MAPConfig, 0x00, sizeof(tstrM2MAPConfig));
+	strcpy((char *)&strM2MAPConfig.au8SSID, AP_WLAN_SSID);
+	
+	m2m_wifi_get_mac_address(mac_addr);
+	/* Generate SSID according mac addr */
+	set_dev_param_to_mac(strM2MAPConfig.au8SSID, mac_addr, MAIN_WLAN_SSID_OFFSET);
+
+	strM2MAPConfig.u8ListenChannel = MAIN_WLAN_CHANNEL;
+	strM2MAPConfig.u8SecType = AP_WLAN_AUTH;
+	
+	strM2MAPConfig.au8DHCPServerIP[0] = 192;
+	strM2MAPConfig.au8DHCPServerIP[1] = 168;
+	strM2MAPConfig.au8DHCPServerIP[2] = 1; 
+	strM2MAPConfig.au8DHCPServerIP[3] = 1;
+	
+#if USE_WEP
+	strcpy((char *)&strM2MAPConfig.au8WepKey, MAIN_WLAN_WEP_KEY);
+	strM2MAPConfig.u8KeySz = strlen(MAIN_WLAN_WEP_KEY);
+	strM2MAPConfig.u8KeyIndx = MAIN_WLAN_WEP_KEY_INDEX;
+
+	/* Generate WEP key according mac addr */
+	set_dev_param_to_mac(strM2MAPConfig.au8WepKey, mac_addr, MAIN_WLAN_WEP_KEY_OFFSET);
+
+#endif
+
+	/* Bring up AP mode with parameters structure. */
+	DBG_LOG("[%s] bring up AP!\r\n", __func__);
+	ret = m2m_wifi_enable_ap(&strM2MAPConfig);
+	if (M2M_SUCCESS != ret) {
+		printf("main: m2m_wifi_enable_ap call error!\r\n");
+		while (1) {
+		}
+	}
+	
+	/* Initialize Socket module */
+	socketInit();
+	registerSocketCallback(m2m_wifi_socket_handler, NULL);
+	
+	gAPEnabled = 1;
+	wifi_states = WIFI_TASK_IDLE;
+}
+
+void setWiFiStates(wifi_FSM_states state)
+{
+	wifi_states = state;
+	return;
+}
+
+wifi_FSM_states getWiFiStates()
+{
+	return wifi_states;
+}
+
+wifi_mode getWiFiMode()
+{
+	return gu8WiFiMode;
+}
+
+void buttonSW0Handle()
+{
+	DBG_LOG("[%s] In\n", __func__);
+	wifi_states = WIFI_TASK_SWITCH_TO_AP;
+	//unRegButtonPressDetectCallback(detSw0Sock);
+	
+}
+void detectWiFiMode()
+{
+	//detSw0Sock = regButtonPressDetectCallback(buttonSW0Handle);
+}
+
+
+int wifiInit(void)
+{
+	DBG_LOG(" %s In\n", __func__);
+	
+	tstrWifiInitParam param;
+	int8_t ret;
+
+	/* Initialize Wi-Fi parameters structure. */
+	memset((uint8_t *)&param, 0, sizeof(tstrWifiInitParam));
+
+	/* Initialize Wi-Fi driver with data and status callbacks. */
+	param.pfAppWifiCb = wifi_cb;
+	
+	ret = m2m_wifi_init(&param);
+	if (M2M_SUCCESS != ret) {
+		printf("main: m2m_wifi_init call error!(%d)\r\n", ret);
+		while (1) {
+		}
+	}
+
+	/* Get MAC Address. */
+	m2m_wifi_get_mac_address(gMacaddr);
+	DBG_LOG("MAC Address: %02X:%02X:%02X:%02X:%02X:%02X\r\n",
+	gMacaddr[0], gMacaddr[1], gMacaddr[2],
+	gMacaddr[3], gMacaddr[4], gMacaddr[5]);
+		
+	sprintf(gAwsMqttClientId, "%02x%02x%02x%02x%02x%02x", gMacaddr[0],gMacaddr[1],gMacaddr[2],gMacaddr[3],gMacaddr[4],gMacaddr[5] );
+	gAwsMqttClientId[12] = 0;
+	DBG_LOG("gAwsMqttClientId Address: %s\r\n",gAwsMqttClientId);
+	//strcpy(gAwsMqttClientId,"f8f005e45e4c");
+	
+	cloud_create_topic(gSubscribe_Channel, DEVICE_TYPE, gAwsMqttClientId, SUBSCRIBE_TOPIC);
+	cloud_create_topic(gPublish_Channel, DEVICE_TYPE, gAwsMqttClientId, PUBLISH_TOPIC);
+	DBG_LOG("gSubscribe_Channel: %s\r\n", gSubscribe_Channel);
+	DBG_LOG("gPublish_Channel: %s\r\n", gPublish_Channel);
+	
+	if (gDefaultSSID[0]==0xFF || gDefaultSSID[0]==0x0 )	// Read nothing from flash, assign default value
+	{
+		printf("use default SSID\r\n");
+		memcpy(gDefaultSSID, MAIN_WLAN_SSID, strlen(MAIN_WLAN_SSID));
+		memcpy(gDefaultKey, MAIN_WLAN_PSK, strlen(MAIN_WLAN_PSK));
+		gAuthType = MAIN_WLAN_AUTH;
+		gDefaultSSID[strlen(MAIN_WLAN_SSID)]=0;
+		gDefaultKey[strlen(MAIN_WLAN_PSK)]=0;
+		DBG_LOG("gDefaultSSID=%s, pw=%s, auth=%d, ssidlen=%d, pslen=%d\n", gDefaultSSID,gDefaultKey,gAuthType, strlen(MAIN_WLAN_SSID), strlen(MAIN_WLAN_PSK));
+	}
+	
+	register_env_sensor_udpate_callback_handler(EnvSensorCallbackHandler);
+	register_rotation_vector_udpate_callback_handler(motionSensorCallbackHandler);
+	
+	//regButtonPress5sTimeoutCallback(buttonSW0Handle);
+
+}
+
+
+
+int wifiTaskExecute()
+{	
+	Cloud_RC ret = CLOUD_RC_NONE_ERROR;
+	
+	m2m_wifi_handle_events(NULL);
+	switch (wifi_states)
+	{
+			
+		case WIFI_TASK_SWITCH_TO_AP:
+			
+			led_ctrl_set_color(LED_COLOR_RED, LED_MODE_BLINK_NORMAL);
+			wifiSwitchtoAP();
+			gu8WiFiMode = APP_AP;
+			wifi_states = WIFI_TASK_SWITCHING_TO_AP;
+			break;
+			
+		case WIFI_TASK_IDLE:	
+		case WIFI_TASK_SWITCHING_TO_AP:
+		case WIFI_TASK_AP_CONNECTED:
+			// no special task
+			break;
+			
+		case WIFI_TASK_SWITCHING_TO_STA:
+			//if (detSw0Sock>=0)
+			//	unRegButtonPressDetectCallback(detSw0Sock);
+			/* Connect to router. */
+			DBG_LOG("connecting AP, ssid = %s , pwd= %s\n", (char *)gDefaultSSID,(char *)gDefaultKey);
+			gu8WiFiMode = APP_STA;
+			m2m_wifi_connect((char *)gDefaultSSID, strlen(gDefaultSSID), gAuthType, (char *)gDefaultKey, M2M_WIFI_CH_ALL);
+			wifi_states = WIFI_TASK_IDLE;
+			break;
+			
+		case WIFI_TASK_CONNECT_CLOUD:
+		
+			ret = cloud_connect();
+
+			if (ret == CLOUD_RC_SUCCESS)
+			{
+				led_ctrl_set_mode(LED_MODE_TURN_ON);
+				wifi_states = WIFI_TASK_MQTT_SUBSCRIBE;
+			}
+			else
+				printf("Cloud connect fail...\r\n");
+			
+			break;
+		
+		case WIFI_TASK_MQTT_SUBSCRIBE:
+			ret = cloud_mqtt_subscribe(gSubscribe_Channel, MQTTSubscribeCBCallbackHandler);
+		
+			if (ret == CLOUD_RC_SUCCESS)
+			{
+				//strcpy(gUuid, "20aaa2de-297e-413f-9ace-a1bebfccf08b");
+				cloud_create_search_topic(gSearch_Channel, gUuid, SUBSCRIBE_SEARCH_TOPIC);
+				cloud_create_search_topic(gSearchResp_Channel, gUuid, PUBLISH_SEARCH_RESP_TOPIC);
+				
+				DBG_LOG("subscribe search channel: %s\n", gSearch_Channel);
+				ret = cloud_mqtt_subscribe(gSearch_Channel, MQTTSubscribeCBCallbackHandler);
+				if (ret == CLOUD_RC_SUCCESS)
+					wifi_states = WIFI_TASK_MQTT_RUNNING;
+				else
+					printf("Publish MQTT channel fail...\r\n");
+			}
+			else
+				printf("Publish MQTT channel fail...\r\n");
+
+			break;
+			
+		case WIFI_TASK_MQTT_RUNNING:
+			
+			//Max time the yield function will wait for read messages
+			ret = cloud_mqtt_yield(100);
+			if(CLOUD_RC_NETWORK_ATTEMPTING_RECONNECT == ret){
+				printf("-->sleep reconnect\r\n");
+				delay_ms(1);
+				break;
+			}	
+			break;
+			
+		default:
+				break;
+		
+	}
+	
+}

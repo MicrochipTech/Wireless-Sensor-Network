@@ -62,6 +62,9 @@
 /************************ HEADERS ****************************************/
 #include "asf.h"
 #include "sio2host.h"
+//#include "wsndemo.h"
+//#include "miwi_api.h"
+
 #include "asf.h"
 #include "main.h"
 #include <string.h>
@@ -78,6 +81,7 @@
 #include "cloud_wrapper.h"
 #include "iot_message.h"
 #include "rtc.h"
+
 #include <asf.h>
 #include "conf_board.h"
 #include "driver/include/m2m_wifi.h"
@@ -92,17 +96,13 @@
 #include "config/button.h"
 #include "config/timer.h"
  
-int miwiNodeTemp; // used to store temperature of room
-// Although the SAMR30 XPRO supports Voltage measurement, for this demo we send 
-//constant node voltage. We have not implemented measurement of voltage on SAMR30 XPRO.
-int miwiNodeBatteryStatus; // used to store battery status of node
-// we used a predefined set of node numbers that belong to room names/locations
-int miwiNodeNum; // Node Number represents the room/location of the node
-char miwiNodeLocation[30]; // Convert Node num to string 
-bool miwiNewDataArrived = true; // flag denoting new data arrival
-int miwiNodeRssi; // used to store Received RSSI
-char str[16]; // used for printing console output
-
+// Global Variables
+int miwiNodeTemp, miwiNodeBatteryStatus;
+char miwiNodeLocation[30];
+int miwiNodeNum;
+bool miwiNewDataArrived = true;
+int miwiNodeRssi;
+int cloudConnecting =0;
 
 // WIFI Stuff
 #define STRING_EOL    "\r\n"
@@ -115,14 +115,15 @@ char str[16]; // used for printing console output
 static uint8_t scan_request_index = 0;
 /** Number of APs found. */
 static uint8_t num_founded_ap = 0;
-int cloudConnecting =0;
 
 /************************** DEFINITIONS **********************************/
 #if (BOARD == SAMR21ZLL_EK)
 #define NVM_UID_ADDRESS   ((volatile uint16_t *)(0x00804008U))
 #endif
 
-// Call back to handle WINC1500 connection to WiFi Access point
+/************************** PROTOTYPES **********************************/
+void ReadMacAddress(void);
+
 static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 {
 	switch (u8MsgType) {
@@ -213,8 +214,6 @@ static void wifi_cb(uint8_t u8MsgType, void *pvMsg)
 	}
 }
 
-
-// Prints this reason for reset of Demo
 static void print_reset_causes(void)
 {
 	enum system_reset_cause rcause = system_get_reset_cause();
@@ -277,7 +276,7 @@ uint8_t appPayloadSize = 0;
 uint8_t *RxAddress;
 uint8_t savePreviousPacket[128];
 
-// In this demo we use Watch Dog timer to reset the demo incase of unexpected fault in application
+
 // Watch Dog Timer Support
 //! [setup]
 static void watchdog_early_warning_callback(void)
@@ -310,7 +309,6 @@ static void configure_wdt(void)
 	wdt_set_config(&config_wdt);
 	//! [setup_4]
 }
-
  static void configure_wdt_callbacks(void)
 {
 	//! [setup_5]
@@ -322,8 +320,16 @@ static void configure_wdt(void)
 	wdt_enable_callback(WDT_CALLBACK_EARLY_WARNING);
 	//! [setup_6]
 }
-
-
+void toggleLED(uint8_t val){
+	uint8_t timer = 10;
+	while(timer--)
+	{
+		LED_Toggle(val);
+		delay_ms(100);
+	}
+}
+char str[16];
+uint8_t count10Secs;
 int main ( void )
 {
 	uint8_t i , TxCount = 0 , button_press;
@@ -337,11 +343,9 @@ int main ( void )
 	system_init();
 	/* Initialize the UART console. */
 	sio2host_init();
-	// Configure Timer MiWi Stack uses this 
+	/* Timer Used for MiWi Tick. */
 	configure_tc();
-
-	/*******************************************************************/
-	// MiWi Stack/Radio Init for channels, modulation etc
+	/* MiWi Protocol Init, Radio Init */
 	MiApp_ProtocolInit(false);
 	// Set the Channel
 	MiApp_SetChannel(APP_CHANNEL_SEL);
@@ -351,29 +355,21 @@ int main ( void )
 	ENABLE_TRX_IRQ();
 	// Enable All cpu interrupts
 	cpu_irq_enable();
+	sio2host_init();
 	print_reset_causes();
-	// MiWi API to establish a connection with Peer Node
 	connection_index  = MiApp_EstablishConnection(0xFF, CONN_MODE_DIRECT);
-	// MiWi API to enable the node as PAN Coordinator Type
 	MiApp_StartConnection(START_CONN_DIRECT, 10, 0);
 	LED_On(LED1);
 	/* Initialize the BSP. */
 	nm_bsp_init();
 	DBG_LOG("Initializing WSN  Device\r\n");
 	DBG_LOG("cpu_freq=%d\n",(int)system_cpu_clock_get_hz());
-	// WiFi and ECC init
 	wifiCryptoInit();
-	// WatchDog Init
 	configure_wdt();
-	// WatchDog call back 
 	configure_wdt_callbacks();
 	while (1) {
-		LED_On(LED0);
-	// Handle all WiFi related events
 	m2m_wifi_handle_events(NULL);
-	// Handle the WatchDog reset count when no failure is happening 
 	wdt_reset_count();
-	// Handle received message from MiWi end device
 	if (MiApp_MessageAvailable())
 	{
 		// if received a data packet toggle led
@@ -387,7 +383,6 @@ int main ( void )
 		miwiNodeTemp = rxMessage.Payload[1];
 		miwiNodeRssi = rxMessage.PacketRSSI;
 		miwiNewDataArrived = true;
-		// print received data on console
 		printf("NodeId: %d, Temp:%d,  RSSI: %d\r\n",rxMessage.Payload[0], rxMessage.Payload[1], rxMessage.PacketRSSI);
 		/*******************************************************************/
 		// Function MiApp_DiscardMessage is used to release the current
@@ -398,9 +393,8 @@ int main ( void )
 		MiApp_DiscardMessage();
 
 	}
-	// Handle Connection to AWS Cloud
 	#if 1
-		if(receivedTime && !cloudConnecting){
+		if(receivedTime && !cloudConnecting && false){
 			cloudConnecting = 1;
 			
 			ret = cloud_connect();
@@ -415,8 +409,6 @@ int main ( void )
 				printf("Cloud connect fail...\r\n");
 				while(1)
 				{
-							// Toggle the Yellow LED on SAMR30 XPRO when connection to AWS is unsuccessful
-							// WatchDog reset will happen when failing to connect to AWS
 							LED_Toggle(LED0);
 							delay_ms(100);
 				}
@@ -428,34 +420,11 @@ int main ( void )
 		/*
 			 Step 2: Communicate with AWS IoT Core:
 		 
-				1. Code below subscribe to a topic in AWS IoT Core.
-				2. The topic name is wifiSensorBoard/”your_thing_name”/dataControl
-				3. After enabling the code, you can start publishing to the the above topic and receive the data here.
-		*/	
-		// We do not subscribe to any topic in this demo
-		// We just publish data to AWS
-		#if 0
-			if(cloudConnecting == 2){
-				cloudConnecting = 3;
-				ret = cloud_mqtt_subscribe(gSubscribe_Channel, MQTTSubscribeCBCallbackHandler);
-				if (ret == CLOUD_RC_SUCCESS)
-				{
-					printf("subscribed to : %s\n", gSubscribe_Channel);
-				}
-				else
-				printf("subscribe MQTT channel fail... %s\r\n",gSubscribe_Channel);
-			}
-		#endif
-
-		/*
-			 Step 3: Communicate with AWS IoT Core:
-		 
 				1. Code below publish to a topic in AWS IoT Core.
 				2. The topic name is wifiSensorBoard/”your_thing_name”/dataControl
 				3. After enabling the code, you can start subscribe to the the above topic and receive the data on AWS IoT.
 	*/
-	// Once MiWi data has arrived from end device publishing this data to AWS is accomplished by the below code
-	if (miwiNewDataArrived)
+	if (miwiNewDataArrived && false)
 	{
 		#if 1
 			if(cloudConnecting == 3){
@@ -474,5 +443,38 @@ int main ( void )
 
 
 
+}
+
+/*********************************************************************
+* Function:         void ReadMacAddress()
+*
+* PreCondition:     none
+*
+* Input:		    none
+*
+* Output:		    Reads MAC Address from MAC Address EEPROM
+*
+* Side Effects:	    none
+*
+* Overview:		    Uses the MAC Address from the EEPROM for addressing
+*
+* Note:			    
+**********************************************************************/
+void ReadMacAddress(void)
+{
+#if BOARD == SAMR21ZLL_EK
+   uint8_t i = 0, j = 0;
+   for (i = 0; i < 8; i += 2, j++)
+   {
+     myLongAddress[i] = (NVM_UID_ADDRESS[j] & 0xFF);
+	 myLongAddress[i + 1] = (NVM_UID_ADDRESS[j] >> 8);
+   }
+#elif ((BOARD == SAMR30_XPLAINED_PRO) || (BOARD == SAMR21_XPLAINED_PRO))
+   uint8_t* peui64 = 0;//edbg_eui_read_eui64();
+	for(uint8_t k=0; k<MY_ADDRESS_LENGTH; k++)
+   {
+		myLongAddress[k] = peui64[MY_ADDRESS_LENGTH-k-1];
+   }
+#endif
 }
 
