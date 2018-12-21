@@ -5,7 +5,7 @@ Case study: classrooms temperature monitoring during Microchip MASTERS conferenc
 
 [View the demo (Live only during MASTERS conference)](http://demo.microchip.com/WSN/Masters/ "view the demo (Live only during MASTERS conference)")
 
-##Features
+## Features
 
 - Monitors sensor data (temperature, battery level and RSSI)
 - Covers 34-35 locations over a vast area of approx. 1 km2
@@ -32,28 +32,27 @@ https://img.shields.io/github/stars/MicrochipTech/Wireless-Sensor-Network.svg)
     + [Data endpoint API](#data-endpoint-api)
     + [Server hosting](#server-hosting)
     + [Cloud IoT core](#cloud-iot-core)
-    + [End point](#endpoint)
+    + [End point](#end-point)
   * [Block diagram](#block-diagram)
 - [Cloud](#cloud)
- * [AWS](#aws)
-  +[AWS EC2](#aws-ec2)
-  +[AWS IoT](#aws-iot)
- * [TTN (The Thing Network)](#ttn)
- * [Server](#server)
-  +[Flask data application](#flask-data-application)
+  * [AWS](#aws)
+    + [AWS EC2](#aws-ec2)
+  * [TTN](#ttn)
+  * [Server](#server)
+    + [Flask data application](#flask-data-application)
       - [Node location dictionary](#node-location-dictionary)
       - [Data logging](#data-logging)
       - [MQTT subscriber](#mqtt-subscriber)
         * [AWS IoT MQTT client](#aws-iot-mqtt-client)
         * [TTN IoT MQQTT client](#ttn-iot-mqqtt-client)
-    + [Apache](#Apache)
     + [HTML website](#html-website)
 - [End nodes](#end-nodes)
- * [Wi-Fi](#wifi)
+  * [Wi-Fi](#wi-fi)
     + [Demo summary](#demo-summary)
-    + [Hardware used](#hardware-used-)
+    + [Hardware used:](#hardware-used-)
     + [Firmware update](#firmware-update)
     + [Software requirements](#software-requirements)
+    + [Steps to get up and running](#steps-to-get-up-and-running)
     + [Provisioning ECC608 device and WINC1500 to your AWS account](#provisioning-ecc608-device-and-winc1500-to-your-aws-account)
     + [Programming SAML21 to connect and publish to AWS IoT](#programming-saml21-to-connect-and-publish-to-aws-iot)
       - [AP configuration](#ap-configuration)
@@ -61,13 +60,14 @@ https://img.shields.io/github/stars/MicrochipTech/Wireless-Sensor-Network.svg)
       - [sleep code and duration](#sleep-code-and-duration)
       - [MQTT client ID](#mqtt-client-id)
       - [Running the code](#running-the-code)
- * [LoRa](#lora)
-   + [Decoder Function](#decoder-function)
-   + [Registration Links](#registration-links)
- * [MiWi](#miwi)
+  * [LoRa](#lora)
+    + [Registration Links](#registration-links)
+  * [MiWi](#miwi)
 
 
-#Overview
+
+# Overview
+
 At MASTERS 2018, we monitored temperatures conference-wide using 3 different networks simultaneously reporting into a single, easily accessible dashboard hosted online to view the information of 34 locations. In addition, for LoRa impelementation we added a golf course node that is placed outside of the hotel to showcase LoRa long range capabilities.
 
 The system is compromised mainly of two parts:
@@ -105,7 +105,7 @@ When using **LoRa & LoRaWAN**, you have to register and use one of the LoRaWAN s
 For the purpose of this demo we went with TTN.  We also had success with converting this demo to senet in India but this is outside of the scope of this page.
 
 
-###End point
+### End point
 The design and techenology used in end nodes can be either:
 - Wi-Fi (IEEE 802.11) 
 - MiWi (microchip propriatory IEEE 802.15.4)
@@ -132,11 +132,11 @@ The data is sent to Cloud servicer provider. AWS IoT for Wi-Fi and MiWi and TTN 
 
 The user then can access our web page from any device anywhere he wants.
 
-#Cloud
+# Cloud
 In this section we discuss how to setup the cloud portion of the demo.
-##AWS
+## AWS
 we utilize two services from AWS in this demo, AWS EC2 as a server hosting platform. and AWS IoT for Wi-Fi and MiWi end nodes MQTT broker.
-###AWS EC2
+### AWS EC2
 To host your server you will have to create a virtual machine EC2 instance before you deploy apache into it.  The process is easy and straight forward once you have your AWS account ready. 
 
 For a step by step uide please follow the amazon guide [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html "here").
@@ -157,8 +157,8 @@ User needs to create Lambda function, AWS IoT Rule and IAM role for AWS provisio
 AWS Zero Touch Provisioing Kit is a project about provisioning the Zero Touch Secure Provisioning Kit to connect and communicate with the Amazon Web Services (AWS) IoT service.
 The user guide of AWS Zero Touch Provisioing Kit project can be found from below: 
 http://microchipdeveloper.com/iot:ztpk
-##TTN
-##Server
+## TTN
+## Server
 once you have your EC2 instance up and running after following the steps above, you will  need to install apache and point it to host our web page and the flask application.
 
 EC2 instance already comes with python, make sure you git pip as we will need it later on.
@@ -167,7 +167,7 @@ and
 `sudo apt-get install python3-pip`
 
 
-###Flask data application
+### Flask data application
 First, install flask on your EC2 instance:
 `$ pip install Flask`
 
@@ -221,7 +221,7 @@ USMastersNodeLocation = {
     "Node35": "Golf course"
 }
 ```
-####Data logging
+#### Data logging
 we store the data we receive on a CSV file. the file location and name is specified on line 141-143.
 
 ```python
@@ -239,7 +239,7 @@ LoRaWriter = csv.writer(loraFile)
 #### MQTT subscriber
 To get notifications from end node, the application need to subscribe to AWS IoT core and TTN servers (or any server you choose)
 
-#####AWS IoT MQTT client
+##### AWS IoT MQTT client
 we used the publickly provided pythond code for AWS IoT. to use it, please go to amazon github repo [here](https://github.com/aws/aws-iot-device-sdk-python "here").
 
 our code  can be used as is if you replace the certificates path with your certificate path. 
@@ -414,7 +414,7 @@ The rest is just HTML files containing a table and SVG files for the location ma
 # End nodes
 In this section we describe the necessary steps to start sending sensor data to the cloud using each respective technology. 
 
-##Wi-Fi
+## Wi-Fi
 Reasons you may want to choose Wi-Fi as your end node:
 
 **Advantages of WiFi **
@@ -446,7 +446,7 @@ To flash firmware to the board, please go through the options [Here](https://git
 ### Software requirements
 Please head over to [this page](https://github.com/MicrochipTech/aws-iot-winc1500-secure-wifi-board-included-source-files/wiki/Software-Installation "this page") to install the necessary tools. 
 
-###Steps to get up and running
+### Steps to get up and running
 Now. if you want to use Wi-Fi the steps are like this:
 -  get the cloud section done first. Your AWS account should be ready so the node can connect to it. 
 - Provision the WINC1500 and the ECCx08 device to connect to your AWS account. 
@@ -489,7 +489,7 @@ and wakes up when the RTC interrupt is received. To control the duration for RTC
 
 ![](https://i.imgur.com/Io9RAUA.png)
 
-####MQTT client ID
+#### MQTT client ID
 You have to enter the MQTT client ID to be similar to the subject ID in your device certificate. enter the client ID into the "gAwsMqttClientId" variable in Line 95 of "winc15x0.c"
 
 ![](https://i.imgur.com/NJzcDnj.png)
@@ -499,7 +499,7 @@ That's pretty much it, now go to main.c file, read the main function and get fam
 
 If you are logged into the AWS test consle ans subscribing to the Wi-Fi topic mentioned above (/Microchip/WSN_Demo/WiFi) you should see a new message received once the board runs.
 
-##LoRa
+## LoRa
 **Introduction**
 LoRa stands for Long Range. LoRaWAN stands for Long Range Wide Area Networks. LoRaWAN is the network on which LoRa operates. LoRaWAN is a media access control (MAC) layer protocol but mainly is a network layer protocol for managing communication between LPWAN gateways and end-node devices as a routing protocol, maintained by the LoRa Alliance. Version 1.0 of the LoRaWAN specification
 Some of the  applications that can be accomplished using LoRa are Smart parking and vehicle management, Facilities and infrastructure management, Fire detection and management, Waste management, Home automation for IoT enables smart appliances, Smart farming and livestock management, Temperature and moisture monitoring, Water level sensors and irrigation control.
@@ -630,7 +630,7 @@ The App data should start appearing as shown in the image below.
 - [Application Registration](https://www.thethingsnetwork.org/docs/applications/add.html "Application Registration")
 - [Device Registration ](https://www.thethingsnetwork.org/docs/devices/registration.html "Device Registration ")
 
-##MiWi
+## MiWi
 **Introduction**
 MiWi stands for Microchip Wireless. MiWi is a proprietary wireless protocols designed by Microchip Technology that use small, low-power digital radios based on the IEEE 802.15.4 standard for wireless personal area networks (WPANs). It is designed for low data transmission rates and short distance, cost constrained networks, such as industrial monitoring and control, home and building automation, remote control, low-power wireless sensors, lighting control and automated meter reading.
 MiWi protocol supports three network topologies
