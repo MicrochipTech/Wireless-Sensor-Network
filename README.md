@@ -5,7 +5,7 @@ Case study: classrooms temperature monitoring during Microchip MASTERS conferenc
 
 [View the demo (Live only during MASTERS conference)](http://demo.microchip.com/WSN/Masters/ "view the demo (Live only during MASTERS conference)")
 
-###Features
+##Features
 
 - Monitors sensor data (temperature, battery level and RSSI)
 - Covers 34-35 locations over a vast area of approx. 1 km2
@@ -25,19 +25,33 @@ https://img.shields.io/github/stars/MicrochipTech/Wireless-Sensor-Network.svg)
 
 
 - [Microchip Wireless Sensor Network](#microchip-wireless-sensor-network)
+  * [Features](#features)
+- [Overview](#overview)
   * [Technlogies used](#technlogies-used)
     + [Web page Front End](#web-page-front-end)
     + [Data endpoint API](#data-endpoint-api)
     + [Server hosting](#server-hosting)
     + [Cloud IoT core](#cloud-iot-core)
+    + [End point](#endpoint)
   * [Block diagram](#block-diagram)
+-[Cloud](#cloud)
+ * [AWS]
+  +[AWS EC2](#aws-ec2)
+  +[AWS IoT](#aws-iot)
+ * [TTN (The Thing Network)](#ttn)
+ * [Server](#server)
+  +[Flask data application](#flask-data-application)
       - [Node location dictionary](#node-location-dictionary)
+      - [Data logging](#data-logging)
       - [MQTT subscriber](#mqtt-subscriber)
+        * [AWS IoT MQTT client](#aws-iot-mqtt-client)
         * [TTN IoT MQQTT client](#ttn-iot-mqqtt-client)
+    + [Apache](#Apache)
     + [HTML website](#html-website)
 - [End nodes](#end-nodes)
+ *[Wi-Fi](#wifi)
     + [Demo summary](#demo-summary)
-    + [Hardware used:](#hardware-used-)
+    + [Hardware used](#hardware-used-)
     + [Firmware update](#firmware-update)
     + [Software requirements](#software-requirements)
     + [Provisioning ECC608 device and WINC1500 to your AWS account](#provisioning-ecc608-device-and-winc1500-to-your-aws-account)
@@ -45,8 +59,12 @@ https://img.shields.io/github/stars/MicrochipTech/Wireless-Sensor-Network.svg)
       - [AP configuration](#ap-configuration)
       - [Node name](#node-name)
       - [sleep code and duration](#sleep-code-and-duration)
+      - [MQTT client ID](#mqtt-client-id)
       - [Running the code](#running-the-code)
-    + [Registration Links](#registration-links)
+  *[LoRa](#lora)
+   + [Decoder Function](#decoder-function)
+   + [Registration Links](#registration-links)
+  *[MiWi](#miwi)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
