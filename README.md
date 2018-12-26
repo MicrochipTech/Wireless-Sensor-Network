@@ -1,7 +1,7 @@
 # Microchip Wireless Sensor Network
-Create a Wi-Fi/ MiWi (15.4) / LoRa wireless sensor network to monitor the temperate covering a wide area like a hotel or a plant. 
+Create a Wi-Fi/ MiWi (15.4) / LoRa wireless sensor network to monitor the temperatures covering a wide area like a hotel or a plant. 
 
-Case study: classrooms temperature monitoring during Microchip MASTERS conference held at JW marriot desert ridge, AZ
+Case study: Classrooms temperature monitoring during Microchip MASTERS conference held at JW Marriot desert ridge, AZ
 
 [View the demo (Live only during MASTERS conference)](http://demo.microchip.com/WSN/Masters/ "view the demo (Live only during MASTERS conference)")
 
@@ -10,7 +10,7 @@ Case study: classrooms temperature monitoring during Microchip MASTERS conferenc
 - Monitors sensor data (temperature, battery level and RSSI)
 - Covers 34-35 locations over a vast area of approx. 1 km2
 - Secure communication with AWS IoT for Wi-Fi and MiWi
-- Device independant web interface to easily view data
+- Device independent web interface to easily view data
 - Data logging to csv file
 - Battery operated devices
 - Showcase different technologies tackling the same task
@@ -27,7 +27,7 @@ https://img.shields.io/github/stars/MicrochipTech/Wireless-Sensor-Network.svg)
 - [Microchip Wireless Sensor Network](#microchip-wireless-sensor-network)
   * [Features](#features)
 - [Overview](#overview)
-  * [Technlogies used](#technlogies-used)
+  * [Technologies used](#technologies-used)
     + [Web page Front End](#web-page-front-end)
     + [Data endpoint API](#data-endpoint-api)
     + [Server hosting](#server-hosting)
@@ -68,51 +68,49 @@ https://img.shields.io/github/stars/MicrochipTech/Wireless-Sensor-Network.svg)
 
 # Overview
 
-At MASTERS 2018, we monitored temperatures conference-wide using 3 different networks simultaneously reporting into a single, easily accessible dashboard hosted online to view the information of 34 locations. In addition, for LoRa impelementation we added a golf course node that is placed outside of the hotel to showcase LoRa long range capabilities.
+At MASTERS 2018, we monitored temperatures conference-wide using 3 different networks simultaneously reporting into a single, easily accessible dashboard hosted online to view the information of 34 locations. In addition, for LoRa implementation we added a golf course node that is placed outside of the hotel to showcase LoRa long range capabilities.
 
 The system is compromised mainly of two parts:
 - Cloud side code
 - Local infrastructure and end nodes 
 
-The same demo and functionailty can be acheived using any of the 3 technologies. However, each technology has it's own strengthes and drawbacks. we provide this expalanation and the supporting code in the hopes to aid microchip customers choose the technology that suits their application best. 
+The same demo and functionality can be achieved using any of the 3 technologies. However, each technology has its own strengths and drawbacks. We provide this explanation and the supporting code to aid microchip customers choose the technology that suits their application best. 
 
-Note: the code here is provided AS IS and was not tested for production quality. it has some know issues in the cloud section that we mention later on. you're fully responsible to test and adapt the code here on your own system. 
+Note: the code here is provided AS IS and was not tested for production quality. It has some knowm issues in the cloud section that we mention later on. You are fully responsible to test and adapt the code on your own system. 
 
-## Technlogies used
+## Technologies used
 
 ### Web page Front End
-The user needs a portal to view the data. To make a platform independent view that doesn'r require installation or a password we choose to display the data on an **HTML + JavaScript** webpage. 
+The user needs a portal to view the data. To make a platform independent view that doesn't require installation or a password we choose to display the data on a **HTML + JavaScript** webpage. 
 
-The webpage is only a tool that retreive the data from a data end point, it can be  replaced by a phone application or added to a per user view in a final product. 
+The webpage is only a tool that retrieve the data from a data end point, it can be replaced by a phone application or added to a per user view in a final product. 
 
 ### Data endpoint API 
-To make our application modular and independant on the Front End implemenation wither it's a website or a mobile app. we decided to implement a RESTful API  using **Flask**
+To make our application modular and independent on the Front End implementation, whether it's a website or a mobile application. we decided to implement a RESTful API  using **Flask**
 
-The data is returned as JSON object from the endpoint and can be viewd [here](http://demo2.microchip.com/WSN/Data/Wi-Fi/ "here").
+The data is returned as JSON object from the endpoint and can be viewed [here](http://demo2.microchip.com/WSN/Data/Wi-Fi/ "here").
 
 ### Server hosting
-For the purpose of this demo and since we were already using AWS IoT core, we used **Amazon EC2** ubuntu virtual machine instance to easily manage all of our services on the same interface..
+For the purpose of this demo, we used **Amazon EC2** ubuntu virtual machine instance (since we were already using AWS IoT core) to easily manage all of our services on the same interface..
 
-However, the same could be acheived with DigitalOcean as a cheaper alternative. In a commerical real world application, you will probably have your own server and this step is unccessary.
+However, the same could be achieved with DigitalOcean as an alternative. In a commercial real world application, you will probably have your own server and this step is unnccessary.
 
 ### Cloud IoT core
-Currently, the most dominant player in the cloud IoT market is Amazon AWS. However we see strong compatiotion coming from google cloud platform. Other platfrom like Microsoft Azure and IBM cloud are present as well. 
-
 For the sake of this demo, when using **Wi-Fi or 802.15.4 (MiWi)** we decided to go with **Amazon AWS IoT core**.  
 
-When using **LoRa & LoRaWAN**, you have to register and use one of the LoRaWAN service providors like **The Things Network (TTN) **or senet. 
+When using **LoRa & LoRaWAN**, you have to register and use one of the LoRaWAN service providers like **The Things Network (TTN) **or senet. 
 
 For the purpose of this demo we went with TTN.  We also had success with converting this demo to senet in India but this is outside of the scope of this page.
 
 
 ### End point
-The design and techenology used in end nodes can be either:
+The design and technology used in end nodes can be either:
 - Wi-Fi (IEEE 802.11) 
-- MiWi (microchip propriatory IEEE 802.15.4)
-- LoRa (propriatory Sub-GHz)
+- MiWi (microchip proprietory IEEE 802.15.4)
+- LoRa (proprietory Sub-GHz)
 
 When choosing end nodes user needs to consider:
-1.  Power budget.
+1. Power budget.
 2. Available Infrastructure.
 3. Required coverage range.
 4. Running cost.
@@ -124,7 +122,7 @@ each of these points are discussed in the end node sections below.
 ## Block diagram
 ![](https://i.imgur.com/umL6xFz.png)
 
-The digram above summarize the system. End nodes are in sleep mode until a given time where it wakes up, send the data to the gateway and then goes back to sleep. 
+The diagram above summarize the system. End nodes are in sleep mode until a given time where it wakes up, sends the data to the gateway and then goes back to sleep. 
 
 LoRa and MiWi need a dedicated gateway to bridge from LoRa/MiWi to Wi-Fi before sending the data to the cloud. Wi-Fi has an advantage that it doesn't need a dedicated Gateway if there is Wi-Fi coverage already which is the case for our Hotel location.
 
@@ -139,7 +137,7 @@ we utilize two services from AWS in this demo, AWS EC2 as a server hosting platf
 ### AWS EC2
 To host your server you will have to create a virtual machine EC2 instance before you deploy apache into it.  The process is easy and straight forward once you have your AWS account ready. 
 
-For a step by step uide please follow the amazon guide [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html "here").
+For a step by step guide please follow the amazon guide [here](https://docs.aws.amazon.com/efs/latest/ug/gs-step-one-create-ec2-resources.html "here").
 
 For our demo we went with free this instance type:
 **ubuntu Server 16.04 LTS  free tier** 
@@ -179,7 +177,7 @@ you will find dictionaries named "USMastersNodeLocation" and "IndiaMastersNodeLo
 
 for example, Node4 during US masters on "Desert Suite 4". then we shipped the same node to india and put it on "Dominion" room. this way the same node, with the same code can be used for different location just by changing the flask application without the need to physicall program the device. 
 
-**Updating the code physicall on the board is not an easy task to do on the field. we encourage you to think of methods like this and plan ahead to avoid updating the board FW.**
+**Updating the code physically on the board is not always convenient in the field. We encourage you to think of methods like this and plan ahead to avoid updating the board FW.**
 
 ```python
 #our Rooms database
@@ -630,7 +628,7 @@ The App data should start appearing as shown in the image below.
 - [Application Registration](https://www.thethingsnetwork.org/docs/applications/add.html "Application Registration")
 - [Device Registration ](https://www.thethingsnetwork.org/docs/devices/registration.html "Device Registration ")
 
-## MiWi
+##MiWi
 **Introduction**
 MiWi stands for Microchip Wireless. MiWi is a proprietary wireless protocols designed by Microchip Technology that use small, low-power digital radios based on the IEEE 802.15.4 standard for wireless personal area networks (WPANs). It is designed for low data transmission rates and short distance, cost constrained networks, such as industrial monitoring and control, home and building automation, remote control, low-power wireless sensors, lighting control and automated meter reading.
 MiWi protocol supports three network topologies
@@ -657,18 +655,16 @@ A typical MiWi Application can be developed by having 2 components.
 Pan Coordinator and End Device. End Devices can FFD/RFD type. RFD end devices were used for the purpose of this demo because of the capability to go to sleep.
 End Device with Temperature sensor (running on batteries) was used to demonstrate the advantages of 
 
-
 **Hardware**
 - Pan Coordinator ([ATSAMR30-XPRO ](https://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMR30-XPRO "ATSAMR30-XPRO ")+ [ATCRYPTOAUTH-XPRO-B](https://www.microchip.com/developmenttools/ProductDetails/atcryptoauth-xpro-b "ATCRYPTOAUTH-XPRO-B") (connected to EXT3 of r30xpro)+ [ATWINC1500-XPRO](https://www.microchip.com/developmenttools/ProductDetails/ATWINC1500-XPRO "ATWINC1500-XPRO")(connected to EXT1))
 - End Device ([ATSAMR30-XPRO ](https://www.microchip.com/DevelopmentTools/ProductDetails/ATSAMR30-XPRO "ATSAMR30-XPRO ")+ [ATIO1-XPRO](https://www.microchip.com/developmenttools/ProductDetails/ATIO1-XPRO "ATIO1-XPRO"))
 - Internet 
 - Battery Pack with 3 AAA 1.5V batteries to Power the End Device
 
-
 **Software **
 - Atmel Stdio 7+ (IDE)
 - ASF 3.35+
-- [Visual C++ 2015 Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools "Visual C++ 2015 Build Tools")
+- Visual C++ 2015 Build Tools
 - Python3
 - “”install with pip” with the following packages: pip install “package_name”
 	- cryptography
@@ -680,7 +676,102 @@ End Device with Temperature sensor (running on batteries) was used to demonstrat
 	- Open SSL
 	- AWS CLI
 - Terminal emulator: TeraTermor PuTTY
+- CA create & register(\MiWi\CA create & register) 
+- WINC1500 Firmware Upgrade files (\MiWi\WINC1500 FW update R30 XPRO)
+- ECC Provisioning using SAMR30 XPRO(\MiWi\ECC Provisioning SAMR30 XPRO)
 - Pan Coordinator Application Project (\MiWi\Pan Coordinator SAMR30 XPRO)
 - End Device Application Project(\MiWi\End Device SAMR30 XPRO)
 
+**Generic Information**
+**What is AWS IoT?**
+AWS IoT is a managed cloud platform that lets connected devices easily and securely interact with cloud applications and other devices.
+**What is AWS Lambda?**
+AWS Lambda is a computing service that runs code in response to events and automatically manages the computing resources required by that code.
+**Device Registration: “JITR”**
+Happens once at the start for each new device
+![](https://i.imgur.com/BczdDxv.jpg)
+**Lambda Function**
+Lambda function is a way to automate thing creation.
+Lambda function will trigger when a unknown device with known CA connects
+Summary of things lambda function will handle
+- AWS reads the unique device name from its certificate
+- Creates a policy and attach it to the device certificate
+- Creates a "thing" which represents a single IoTdevice
+- Activates the devices certificate
+
+**Step by Step Procedure to replicate MiWi Demo**
+1. Create AWS account 
+	- Create a user, ZTUser
+	- Create a group, ZTGroup and attach two policy types (AWSIoTFullAccessand AWSLambdaFullAccess)
+	- Assign user ZTUser to group ZTGroup
+Follow steps in section III. Create and Administer your own AWS Account mentioned in [link](http://microchipdeveloper.com/iot:ztpk "link")
+2. Lambda setup
+For lambda setup follow the steps mentioned in section“V. AWS IoTJust-In-Time Registration Setup" [link](http://microchipdeveloper.com/iot:ztpk "link")
+3. Create certificate ecosystem
+For the purpose of this demo we create our own trust chain
+	Run the scripts here to:
+	- Create Root CA and it’s key.
+		ca_create_root.py
+	- Create CSR and its key
+		ca_create_signer_csr.py
+	- Create Signer CA
+		ca_create_signer.py
+
+	The following certificates will be generated
+			 root-ca.crt/key
+			 signer-ca.crt/key
+
+4. Register our CA with AWS IoT
+In the last step CA certificate was generated, AWS require user to register and Activate it so it can trigger the Lambda function when a device using the CA connects to it. Part of the registration require that user to prove that user does  have the Private key to the CA.
+steps for registration
+	- Request a registration code from AWS IoT
+	- Create a verification certificate around that registration code
+	- Sign the verification certificate with the Signer CA
+	- Supply both the Signer CA certificate and verification certificate when registering
+
+	In order to accomplish the steps for registration user has to 
+		- 	Configure AWS CLI Credentials
+			Open a command prompt
+Navigate to “C:\Program Files\Amazon\AWSCLI”
+Type “awsconfigure”
+Enter info from the user account credentials file
+![](https://i.imgur.com/TBA8ESi.jpg)
+		- 	Run aws_register_signer.py 
+
+5. Provision ECC608
+ To provision the ECC608 user needs to:
+	- Generate device Public/Private Key pair and Create a CSR for device certificate.
+	
+		Open the SAMR30 XPRO ECC solution on Atmel Studio 7, connect the EDBG USB ATWINC1500-XPRO board on EXT1 and ATCRYPTOAUTH-B XPRO board on EXT3 of ATSAMR30-XPRO
+		Open TeraTerm and set the following settings 
+		![](https://i.imgur.com/31OKKHX.jpg)
+		Program the solution to ATSAMR30-XPRO and terminal window will have public key and csr displayed.
+	- Generate device certificate.
+		To generate the WINC device certificate:
+		- Open the“generate device certificate.py” script.
+		- Copy and paste the CSR data from your terminal to “csr” variable in line 16 and save.
+		- Run the python script - "generate device certificate.py".
+	- Store the certificate data into WINC1500.
+		To store the certificate data in to WINC1500
+		- Open Atmel Studio, new example project and WINC1500_FIRMWARE_UPDATE as shown in figure
+![](https://i.imgur.com/7CYN7TY.jpg)
+Note: Firmware Update project is not available for SAMR30 Xplained Pro currently. We will hack the existing project to store the certificate data onto WINC1500 XPRO
+		- Go to the FW update project directory.
+		- Rename the device cert to winc_ecdsa.cer and add it to (Replace):
+WINC1500_FIRMWARE_UPDATE_PROJECT2\src\firmware\tls_cert_store
+		- Add the signer CA “.cer” to: “make sure there is no other CA”
+WINC1500_FIRMWARE_UPDATE_PROJECT2\src\firmware\tls_cert_store\CA
+		Add AWS root cert "root-ca"to
+WINC1500_FIRMWARE_UPDATE_PROJECT2\src\firmware\Tools\root_certificate_downloader\binary
+		- Copy Paster Items
+			- Copy and paste file (replace) *download_all.bat* from "\MiWi\WINC1500 FW update R30 XPRO" to "\WINC1500_FIRMWARE_UPDATE_PROJECT2\src\firmware"
+			- Copy and paste file *samr30_xplained_pro_serial_bridge.elf *from "\MiWi\WINC1500 FW update R30 XPRO" to "WINC1500_FIRMWARE_UPDATE_PROJECT2\src\firmware\Tools\serial_bridge". The serial bridge firmware source for ATSAMR30-XPRO and WINC1500 XPRO combination is available for user in "\MiWi" folder. This example demonstrates how to implement a EDBG UART to WINC1500 SPI bridge. 
+			- Copy and paste file *samr30_xplained_pro_firmware_update.bat* from "\MiWi\WINC1500 FW update R30 XPRO" to "\WINC1500_FIRMWARE_UPDATE_PROJECT2\src"
+			- Run samr30_xplained_pro_firmware_update.bat file to update the firmware on WINC1500. When upgrading firmware ensure ATSAMR30-XPRO is connected to EDBG USB and ATWINC1500-XPRO to EXT1 header of R30 XPRO
+6. Connect to AWS IoTCloud and publish to a thingName
+	- open “MIWi P2P ECC AWS” solution.
+	- Open kit-info.json in  python files directory.
+	- Copy “endpointAddress” value to AWS_IOT_MQTT_HOST in file “aws_iot_config.h”
+	- Copy “thing_name” to “gAwsMqttClientId” variable in winc15x0.c
+	- Connect the CryptoAuth board to EXT3 of the SAMR30 XPRO board and ATWINC1500-XRPO to EXT1 of ATSAMR30-XPRO. Program the  project. Connect the EDBG usb to pc and use a terminal monitor like teraterm for debugging
 
