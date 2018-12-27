@@ -497,7 +497,8 @@ That's pretty much it, now go to main.c file, read the main function and get fam
 
 If you are logged into the AWS test consle ans subscribing to the Wi-Fi topic mentioned above (/Microchip/WSN_Demo/WiFi) you should see a new message received once the board runs.
 
-##LoRa
+## LoRa
+
 **Introduction**
 LoRa stands for Long Range. LoRaWAN stands for Long Range Wide Area Networks. LoRaWAN is the network on which LoRa operates. LoRaWAN is a media access control (MAC) layer protocol but mainly is a network layer protocol for managing communication between LPWAN gateways and end-node devices as a routing protocol, maintained by the LoRa Alliance. Version 1.0 of the LoRaWAN specification
 Some of the  applications that can be accomplished using LoRa are Smart parking and vehicle management, Facilities and infrastructure management, Fire detection and management, Waste management, Home automation for IoT enables smart appliances, Smart farming and livestock management, Temperature and moisture monitoring, Water level sensors and irrigation control.
@@ -627,7 +628,7 @@ XXXX denotes your Application Name chosen
 - [Application Registration](https://www.thethingsnetwork.org/docs/applications/add.html "Application Registration")
 - [Device Registration ](https://www.thethingsnetwork.org/docs/devices/registration.html "Device Registration ")
 
-##MiWi
+## MiWi
 
 **Introduction**
 MiWi stands for Microchip Wireless. MiWi is a proprietary wireless protocols designed by Microchip Technology that use small, low-power digital radios based on the IEEE 802.15.4 standard for wireless personal area networks (WPANs). It is designed for low data transmission rates and short distance, cost constrained networks, such as industrial monitoring and control, home and building automation, remote control, low-power wireless sensors, lighting control and automated meter reading.
