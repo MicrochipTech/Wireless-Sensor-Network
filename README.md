@@ -497,12 +497,12 @@ That's pretty much it, now go to main.c file, read the main function and get fam
 
 If you are logged into the AWS test consle ans subscribing to the Wi-Fi topic mentioned above (/Microchip/WSN_Demo/WiFi) you should see a new message received once the board runs.
 
-## LoRa
+##LoRa
 **Introduction**
 LoRa stands for Long Range. LoRaWAN stands for Long Range Wide Area Networks. LoRaWAN is the network on which LoRa operates. LoRaWAN is a media access control (MAC) layer protocol but mainly is a network layer protocol for managing communication between LPWAN gateways and end-node devices as a routing protocol, maintained by the LoRa Alliance. Version 1.0 of the LoRaWAN specification
 Some of the  applications that can be accomplished using LoRa are Smart parking and vehicle management, Facilities and infrastructure management, Fire detection and management, Waste management, Home automation for IoT enables smart appliances, Smart farming and livestock management, Temperature and moisture monitoring, Water level sensors and irrigation control.
 
-**Advantages of LoRaWAN **
+**Advantages of LoRaWAN**
 - Long battery life due to low power consumption
 - Low cost implementation due to low cost hardware and unlicensed spectrum
 - Long range coverage and in-building penetration
@@ -524,7 +524,7 @@ End Device with Temperature sensor (running on batteries) was used to demonstrat
 - Internet Connectivity
 - Battery Pack with 3 AAA 1.5V batteries to Power the end device
 
-**Software **
+**Software**
 - Network Server used was the [The Things Network](https://console.thethingsnetwork.org/ "The Things Network")
 - Application Server used was Flask Application described in earlier section
 - Arduino IDE
@@ -620,15 +620,15 @@ XXXX denotes your Application Name chosen
 		}
 		}
 
-8.  After configuring the decoder and programming the board with the Application Source code.
-The App data should start appearing as shown in the image below.
+8.  After configuring the decoder and programming the board with the Application Source code. The App data should start appearing.
  
-###  Registration Links
-- [**The Things Gateway Registration**](https://www.thethingsnetwork.org/docs/gateways/gateway/ "**The Things Gateway Registration**")
+## #  Registration Links
+- [The Things Gateway Registration](https://www.thethingsnetwork.org/docs/gateways/gateway/ "**The Things Gateway Registration**")
 - [Application Registration](https://www.thethingsnetwork.org/docs/applications/add.html "Application Registration")
 - [Device Registration ](https://www.thethingsnetwork.org/docs/devices/registration.html "Device Registration ")
 
 ##MiWi
+
 **Introduction**
 MiWi stands for Microchip Wireless. MiWi is a proprietary wireless protocols designed by Microchip Technology that use small, low-power digital radios based on the IEEE 802.15.4 standard for wireless personal area networks (WPANs). It is designed for low data transmission rates and short distance, cost constrained networks, such as industrial monitoring and control, home and building automation, remote control, low-power wireless sensors, lighting control and automated meter reading.
 MiWi protocol supports three network topologies
@@ -636,7 +636,7 @@ MiWi protocol supports three network topologies
 - Star
 - Mesh
 
-**Advantages of MiWi **
+**Advantages of MiWi**
 - Long battery life due to low power consumption
 - Low cost implementation due to low cost hardware and unlicensed spectrum
 - Long range coverage and in-building penetration when using Sub GHz Radios
@@ -661,7 +661,7 @@ End Device with Temperature sensor (running on batteries) was used to demonstrat
 - Internet 
 - Battery Pack with 3 AAA 1.5V batteries to Power the End Device
 
-**Software **
+**Software**
 - Atmel Stdio 7+ (IDE)
 - ASF 3.35+
 - Visual C++ 2015 Build Tools
@@ -774,4 +774,5 @@ WINC1500_FIRMWARE_UPDATE_PROJECT2\src\firmware\Tools\root_certificate_downloader
 	- Copy “endpointAddress” value to AWS_IOT_MQTT_HOST in file “aws_iot_config.h”
 	- Copy “thing_name” to “gAwsMqttClientId” variable in winc15x0.c
 	- Connect the CryptoAuth board to EXT3 of the SAMR30 XPRO board and ATWINC1500-XRPO to EXT1 of ATSAMR30-XPRO. Program the  project. Connect the EDBG usb to pc and use a terminal monitor like teraterm for debugging
+
 
