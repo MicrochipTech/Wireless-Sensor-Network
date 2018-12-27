@@ -79,7 +79,21 @@ const uint8_t g_csr_template_3_device[] = {
 	0xb4, 0x11, 0x4b, 0xa1, 0x65, 0x7c, 0xbb, 0x48,  0xcf, 0x6d, 0xf6, 0xd0, 0x6a, 0x41, 0x00, 0x96,
 	0xe1, 0xe2, 0x79, 0x73, 0xdb, 0xf7, 0x97, 0x80,  0x41, 0x9b, 0x35, 0x01, 0x88, 0x5e
 };
-
+// Default AWS config for the ECCx08A.  The first 16 bytes are device specific and are not copied
+//
+uint8_t aws_config[] = {
+	
+	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,   0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+	AWS_ECCx08A_I2C_ADDRESS , 0x00, 0xAA, 0x00, 0x8F, 0x20, 0xC4, 0x44,   0x87, 0x20, 0x87, 0x20, 0x8F, 0x0F, 0xC4, 0x36,
+	0x9F, 0x0F, 0x82, 0x20, 0x0F, 0x0F, 0xC4, 0x44,   0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F,
+	0x0F, 0x0F, 0x0F, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF,   0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,   0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x33, 0x00, 0x1C, 0x00, 0x13, 0x00, 0x13, 0x00,   0x7C, 0x00, 0x1C, 0x00, 0x3C, 0x00, 0x33, 0x00,
+	0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00,   0x3C, 0x00, 0x3C, 0x00, 0x3C, 0x00, 0x30, 0x00
+};
+//! Mutable device description
+ATCAIfaceCfg      g_crypto_device;
 const atcacert_def_t g_csr_def_3_device = {
 	.type                   = CERTTYPE_X509,
 	.template_id            = 3,
@@ -158,7 +172,179 @@ const atcacert_def_t g_csr_def_3_device = {
 
 
 uint8_t public_key[ATCA_PUB_KEY_SIZE];
+//local function prototypes
+ATCA_STATUS configure_device(uint8_t new_device_address);
 
+ATCA_STATUS detect_crypto_device()
+{
+	ATCA_STATUS  status;
+	static bool attachedDevices[3];    //array to keep track of the devices detected
+	uint8_t cur_config[ATCA_ECC_CONFIG_SIZE];
+
+	// do device detection
+	memset(attachedDevices, 0, sizeof(attachedDevices));
+	
+	g_crypto_device = cfg_ateccx08a_i2c_default;
+	g_crypto_device.atcai2c.slave_address = ECCx08A_DEFAULT_ADDRESS;
+
+	// detect any devices connected with factory default address, ECCx08A_DEFAULT_ADDRESS
+	status = atcab_init(&g_crypto_device);
+	if(status != ATCA_SUCCESS)
+	return status;
+	
+	status = atcab_read_config_zone(cur_config);
+	if(status == ATCA_RX_CRC_ERROR)
+	{
+		// corrupted data received.  A likely cause is that there are multiple devices with the same address attached.
+		// firmware bug in WINC will cause a CRC Error on the default address if it's connected
+		attachedDevices[DEV_INVALID] = true;
+	}
+	else if(status == ATCA_TOO_MANY_COMM_RETRIES)
+	// no device found
+	attachedDevices[DEV_UNCONF] = false;
+	else if(status == ATCA_SUCCESS)
+	// a single unconfigured device was found at ECCx08A_DEFAULT_ADDRESS
+	attachedDevices[DEV_UNCONF] = true;
+	else
+	// other error
+	return status;
+
+
+	// try to communicate with AWS_ECCx08A_I2C_ADDRESS
+	g_crypto_device.atcai2c.slave_address = AWS_ECCx08A_I2C_ADDRESS;
+	atcab_init(&g_crypto_device);
+	status = atcab_read_config_zone(cur_config);
+	
+	if(status == ATCA_TOO_MANY_COMM_RETRIES)
+	// no devices found
+	attachedDevices[DEV_CRYPTO] = false;
+	else if(status == ATCA_SUCCESS)
+	// device was found and able to be read from, assuming WINC-based crypto device
+	attachedDevices[DEV_CRYPTO] = true;
+	else
+	// other error
+	return status;
+	
+	// device detection completed, now do appropriate configuration...
+	
+	if(attachedDevices[DEV_CRYPTO])
+	// pre-configured crypto device found, proceed with demo
+	return ATCA_SUCCESS;
+	else if(attachedDevices[DEV_INVALID])
+	// invalid data found, probably because multiple devices connected
+	return ATCA_RX_CRC_ERROR;
+	else if(attachedDevices[DEV_UNCONF])
+	// found unconfigured crypto device
+	return ATCA_GEN_FAIL;
+	else
+	// no crypto devices were found
+	return ATCA_NO_DEVICES;
+}
+
+
+void printDevDetectStatus(ATCA_STATUS status)
+{
+	if(status == ATCA_NO_DEVICES)
+	{
+		// no device detected
+		printf("The AWS IoT Zero Touch Demo ATECCx08A pre-config has not completed.\r\n");
+
+		printf("No attached CryptoAuth board detected.\r\n");
+		printf("Please check your hardware configuration.\r\n");
+		printf("Stopping the AWS IoT demo.\r\n");
+	}
+	else if(status == ATCA_RX_CRC_ERROR)
+	{
+		// bad data received, likely because multiple crypto devices are on the same address
+		printf("The AWS IoT Zero Touch Demo ATECCx08A pre-config has not completed.\r\n");
+
+		printf("Unconfigured CryptoAuth board connected while WINC1500 connected.\r\n");
+		printf("Please disconnect WINC1500 and restart the demo.\r\n");
+		printf("Stopping the AWS IoT demo.\r\n");
+	}
+	else
+	{
+		// Other error, stop the demo
+
+		// Set the current state
+		printf("The AWS IoT Zero Touch Demo ATECCx08A pre-config has not completed.\r\n");
+
+		printf("Unknown error trying to communicate with CryptoAuth board.\r\n");
+		printf("Please check your hardware configuration.\r\n");
+		printf("Stopping the AWS IoT demo.\r\n");
+	}
+}
+
+ATCA_STATUS preconfigure_crypto_device()
+{
+	ATCA_STATUS  status;
+	bool isLocked = false;
+	uint8_t slots_to_genkey[] = {0, 2, 3, 7};
+	
+	// setup to talk to initailly unconfigured device
+	g_crypto_device = cfg_ateccx08a_i2c_default;
+	g_crypto_device.atcai2c.slave_address = ECCx08A_DEFAULT_ADDRESS;
+
+	status = atcab_init(&g_crypto_device);
+	if(status != ATCA_SUCCESS)
+	return status;
+
+	// start the configuration
+
+	// configure as an AWS ECCx08...
+	printf("Configuring CryptoAuth Board now...\r\n");
+	
+	// check to see if the Config Zone is already locked
+	status = atcab_is_locked(ATCA_ZONE_CONFIG, &isLocked);
+	if(status != ATCA_SUCCESS)
+	return status;
+	
+	if(isLocked)
+	{
+		printf("Cannot configure Config Zone - Config Zone already locked.\r\n");
+		return ATCA_CONFIG_ZONE_LOCKED;
+	}
+	
+	// write the entire AWS config to the device
+	status = atcab_write_config_zone(aws_config);
+	if(status != ATCA_SUCCESS)
+	return status;
+	
+	// lock the device in preparation for the actual demo
+	status = atcab_lock_config_zone();
+	if(status != ATCA_SUCCESS)
+	return status;
+
+	status = atcab_lock_data_zone();
+	if(status != ATCA_SUCCESS)
+	return status;
+	
+	
+	// put the newly configured device to sleep to have the changes take effect.
+	atcab_wakeup();
+	atcab_sleep();
+	
+	// setup to talk to newly configured AWS device
+	g_crypto_device.atcai2c.slave_address = AWS_ECCx08A_I2C_ADDRESS;
+
+	status = atcab_init(&g_crypto_device);
+	if(status != ATCA_SUCCESS)
+	return status;
+	
+	// Generate private keys for slots
+	for(uint16_t i=0; i < (sizeof(slots_to_genkey)/sizeof(slots_to_genkey[0])); i++)
+	{
+		status = atcab_genkey(slots_to_genkey[i], NULL);
+		if(status != ATCA_SUCCESS)
+		{
+			printf("Could not generate key on slot.\r\n");
+			return status;
+		}
+	}
+	
+	// all done
+	return ATCA_SUCCESS;
+}
 static const char* bin2hex(const void* data, size_t data_size)
 {
 	static char buf[256];

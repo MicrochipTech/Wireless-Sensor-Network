@@ -158,12 +158,12 @@ void set_motion_sensor_update_timer(unsigned char time);
 //#define SETUP0
 //#define SETUP1
 //#define SETUP2
-#define SETUP3
+//#define SETUP3
 //#define SETUP4
 //#define SETUP5
 //#define SETUP6
-//#define SETUP7 // asda
+//#define SETUP7 
 //#define SETUP8
 //#define SETUP9
 //#define SETUP10
-//#define SETUP11
+#define SETUP11

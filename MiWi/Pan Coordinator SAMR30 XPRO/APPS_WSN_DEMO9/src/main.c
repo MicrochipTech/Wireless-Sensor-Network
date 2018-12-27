@@ -374,8 +374,6 @@ int main ( void )
 	{
 		// if received a data packet toggle led
 		LED_Toggle(LED1);
-			#if defined (PC)
-		#endif
 		memset(miwiNodeLocation,0,sizeof(miwiNodeLocation));
 		strcat(miwiNodeLocation, "Node");
 		strcat (miwiNodeLocation,itoa(rxMessage.Payload[0], str , 10));
@@ -394,7 +392,7 @@ int main ( void )
 
 	}
 	#if 1
-		if(receivedTime && !cloudConnecting && false){
+		if(receivedTime && !cloudConnecting){
 			cloudConnecting = 1;
 			
 			ret = cloud_connect();
@@ -424,7 +422,7 @@ int main ( void )
 				2. The topic name is wifiSensorBoard/”your_thing_name”/dataControl
 				3. After enabling the code, you can start subscribe to the the above topic and receive the data on AWS IoT.
 	*/
-	if (miwiNewDataArrived && false)
+	if (miwiNewDataArrived)
 	{
 		#if 1
 			if(cloudConnecting == 3){

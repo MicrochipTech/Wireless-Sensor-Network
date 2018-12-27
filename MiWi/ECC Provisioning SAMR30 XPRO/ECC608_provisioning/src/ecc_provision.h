@@ -78,7 +78,31 @@ struct Ecc508A_Slot8_Metadata
 	uint8_t  hostname[SLOT8_HOSTNAME_SIZE];
 };
 
+// Configure ECC
+#define DEV_UNCONF  0
+#define DEV_INVALID 1
+#define DEV_CRYPTO  2
 
+// Byte offsets for configuration settings
+#define SLOTCONFIG_OFFSET   20
+#define KEYCONFIG_OFFSET    96
+
+// Device I2C Addresses
+#define ECCx08A_DEFAULT_ADDRESS  (uint8_t)(0xC0)  //! Default I2C address for unconfigured ECCx08A crypto devices
+#define AWS_WINC_ECC508A_I2C_ADDRESS (uint8_t)(0xC2) //! AWS WINC1500 ECC508A device address
+#define AWS_ECCx08A_I2C_ADDRESS  (uint8_t)(0xB0)  //! AWS ECCx08A device I2C address
+#define AWS_KIT_DEVICES_MAX      (1)              //! Maximum number of AWS Kit CryptoAuth devices
+
+
+// ! Mutable device description object
+extern ATCAIfaceCfg      g_crypto_device;
+
+// Function Prototypes
+ATCA_STATUS preconfigure_crypto_device(void);
+ATCA_STATUS detect_crypto_device(void);
+bool check_config_compatibility(void);
+void printDevDetectStatus(ATCA_STATUS status);
+// End Configure ECC
 
 ATCA_STATUS cryptoauthlib_init(void);
 ATCA_STATUS read_ecc_confiuration(void);

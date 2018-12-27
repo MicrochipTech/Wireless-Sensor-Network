@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.ARMGCC.C</ToolchainName>
-    <ProjectGuid>{a0a83575-1bad-4180-a555-b2c5cac801ed}</ProjectGuid>
+    <ProjectGuid>dce6c7e3-ee26-4d79-826b-08594b9ad897</ProjectGuid>
     <avrdevice>ATSAMR30G18A</avrdevice>
     <avrdeviceseries>saml21</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>ECC608_provisioning</AssemblyName>
-    <Name>ECC608_provisioning</Name>
-    <RootNamespace>ECC608_provisioning</RootNamespace>
+    <AssemblyName>WINC1500_SERIAL_BRIDGE_EXAMPLE1</AssemblyName>
+    <Name>WINC1500_SERIAL_BRIDGE_EXAMPLE1</Name>
+    <RootNamespace>WINC1500_SERIAL_BRIDGE_EXAMPLE1</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -32,33 +32,116 @@
       <framework-data>
         <options>
           <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="common.services.basic.serial" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="common2.services.delay" value="Add" config="systick" content-id="Atmel.ASF" />
-          <option id="sam0.drivers.nvm" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="sam0.drivers.port" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="sam0.drivers.sercom.i2c.master" value="Add" config="callback" content-id="Atmel.ASF" />
-          <option id="sam0.drivers.system" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="sam0.drivers.tcc" value="Add" config="callback" content-id="Atmel.ASF" />
-          <option id="sam0.utils.stdio.stdio_serial" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.components.wifi.winc1500" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="sam0.utils.linker_scripts" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="common.components.wifi.winc1500.serial_bridge_example" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="common.utils" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam0.drivers.port" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam0.utils" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam0.utils.cmsis.saml21.source.template" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam0.utils.stdio" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam0.utils.stdio.stdio_serial" value="Add" config="" content-id="Atmel.ASF" />
         </options>
         <configurations>
-          <configuration key="config.sam0.drivers.sercom.usart" value="callback" default="callback" content-id="Atmel.ASF" />
-          <configuration key="config.sam0.drivers.sercom.spi" value="callback" default="callback" content-id="Atmel.ASF" />
-          <configuration key="config.sam0.drivers.extint" value="callback" default="callback" content-id="Atmel.ASF" />
+          <configuration key="config.compiler.armgcc.create_aux" value="no" default="no" content-id="Atmel.ASF" />
+          <configuration key="config.compiler.as5_arm.create_aux" value="no" default="no" content-id="Atmel.ASF" />
         </configurations>
         <files>
-          <file path="src/main.c" framework="" version="" source="common2/applications/user_application/main.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/config/conf_board.h" framework="" version="" source="common2/applications/user_application/user_board/config_saml21/conf_board.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/config/conf_clocks.h" framework="" version="" source="common2/applications/user_application/user_board/config_saml21/conf_clocks.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common2/boards/user_board/init.c" framework="" version="" source="common2/boards/user_board/init.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common2/boards/user_board/user_board.h" framework="" version="" source="common2/boards/user_board/user_board.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common2/services/delay/delay.h" framework="" version="" source="common2/services/delay/delay.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common2/services/delay/sam0/systick_counter.c" framework="" version="" source="common2/services/delay/sam0/systick_counter.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common2/services/delay/sam0/systick_counter.h" framework="" version="" source="common2/services/delay/sam0/systick_counter.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/common/boards/board.h" framework="" version="" source="common/boards/board.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/WINC1500_SW_API.chm" framework="" version="" source="common/components/wifi/winc1500/host_drv/WINC1500_SW_API.chm" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/bsp/include/nm_bsp.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/bsp/include/nm_bsp.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/bsp/include/nm_bsp_internal.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/bsp/include/nm_bsp_internal.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/bsp/include/nm_bsp_saml21.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/bsp/include/nm_bsp_saml21.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/bsp/source/nm_bsp_saml21.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/bsp/source/nm_bsp_saml21.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/bus_wrapper/include/nm_bus_wrapper.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/bus_wrapper/include/nm_bus_wrapper.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/bus_wrapper/source/nm_bus_wrapper_saml21.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/bus_wrapper/source/nm_bus_wrapper_saml21.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/common/include/nm_common.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/common/include/nm_common.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/common/include/nm_debug.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/common/include/nm_debug.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/common/source/nm_common.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/common/source/nm_common.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/include/ecc_types.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/include/ecc_types.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/include/m2m_ate_mode.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/include/m2m_ate_mode.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/include/m2m_crypto.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/include/m2m_crypto.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/include/m2m_ota.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/include/m2m_ota.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/include/m2m_periph.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/include/m2m_periph.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/include/m2m_ssl.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/include/m2m_ssl.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/include/m2m_types.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/include/m2m_types.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/include/m2m_wifi.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/include/m2m_wifi.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/m2m_ate_mode.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/m2m_ate_mode.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/m2m_crypto.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/m2m_crypto.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/m2m_hif.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/m2m_hif.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/m2m_hif.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/m2m_hif.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/m2m_ota.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/m2m_ota.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/m2m_periph.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/m2m_periph.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/m2m_ssl.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/m2m_ssl.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/m2m_wifi.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/m2m_wifi.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmasic.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmasic.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmasic.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmasic.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmbus.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmbus.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmbus.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmbus.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmdrv.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmdrv.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmdrv.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmdrv.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmi2c.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmi2c.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmi2c.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmi2c.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmspi.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmspi.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmspi.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmspi.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmuart.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmuart.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/driver/source/nmuart.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/driver/source/nmuart.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/programmer/programmer.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/programmer/programmer.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/programmer/programmer_apis.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/programmer/programmer_apis.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/socket/include/m2m_socket_host_if.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/socket/include/m2m_socket_host_if.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/socket/include/socket.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/socket/include/socket.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/socket/source/socket.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/socket/source/socket.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/socket/source/socket_internal.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/socket/source/socket_internal.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/spi_flash/include/flexible_flash.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/spi_flash/include/flexible_flash.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/spi_flash/include/spi_flash.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/spi_flash/include/spi_flash.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/spi_flash/include/spi_flash_map.h" framework="" version="" source="common/components/wifi/winc1500/host_drv/spi_flash/include/spi_flash_map.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/spi_flash/source/flexible_flash.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/spi_flash/source/flexible_flash.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/components/wifi/winc1500/host_drv/spi_flash/source/spi_flash.c" framework="" version="" source="common/components/wifi/winc1500/host_drv/spi_flash/source/spi_flash.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/config/conf_board.h" framework="" version="" source="common/components/wifi/winc1500/serial_bridge_example/saml21j18b_saml21_xplained_pro_b/conf_board.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/config/conf_clocks.h" framework="" version="" source="common/components/wifi/winc1500/serial_bridge_example/saml21j18b_saml21_xplained_pro_b/conf_clocks.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/config/conf_extint.h" framework="" version="" source="common/components/wifi/winc1500/serial_bridge_example/saml21j18b_saml21_xplained_pro_b/conf_extint.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/config/conf_spi.h" framework="" version="" source="common/components/wifi/winc1500/serial_bridge_example/saml21j18b_saml21_xplained_pro_b/conf_spi.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/config/conf_winc.h" framework="" version="" source="common/components/wifi/winc1500/serial_bridge_example/saml21j18b_saml21_xplained_pro_b/conf_winc.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/serial_bridge_ultra.c" framework="" version="" source="common/components/wifi/winc1500/serial_bridge_example/serial_bridge_ultra.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/serial/sam0_usart/usart_serial.h" framework="" version="" source="common/services/serial/sam0_usart/usart_serial.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/serial/serial.h" framework="" version="" source="common/services/serial/serial.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/common/utils/interrupt.h" framework="" version="" source="common/utils/interrupt.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/common/utils/interrupt/interrupt_sam_nvic.c" framework="" version="" source="common/utils/interrupt/interrupt_sam_nvic.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/common/utils/interrupt/interrupt_sam_nvic.h" framework="" version="" source="common/utils/interrupt/interrupt_sam_nvic.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/common/utils/parts.h" framework="" version="" source="common/utils/parts.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/boards/saml21_xplained_pro_b/board_init.c" framework="" version="" source="sam0/boards/saml21_xplained_pro_b/board_init.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/boards/saml21_xplained_pro_b/saml21_xplained_pro.h" framework="" version="" source="sam0/boards/saml21_xplained_pro_b/saml21_xplained_pro.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/extint/extint.h" framework="" version="" source="sam0/drivers/extint/extint.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/extint/extint_callback.c" framework="" version="" source="sam0/drivers/extint/extint_callback.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/extint/extint_callback.h" framework="" version="" source="sam0/drivers/extint/extint_callback.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/extint/extint_sam_l_c/extint.c" framework="" version="" source="sam0/drivers/extint/extint_sam_l_c/extint.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/port/port.c" framework="" version="" source="sam0/drivers/port/port.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/port/port.h" framework="" version="" source="sam0/drivers/port/port.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/port/quick_start/qs_port_basic.h" framework="" version="" source="sam0/drivers/port/quick_start/qs_port_basic.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/sercom.c" framework="" version="" source="sam0/drivers/sercom/sercom.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/sercom.h" framework="" version="" source="sam0/drivers/sercom/sercom.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/sercom_interrupt.c" framework="" version="" source="sam0/drivers/sercom/sercom_interrupt.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/sercom_interrupt.h" framework="" version="" source="sam0/drivers/sercom/sercom_interrupt.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/sercom_pinout.h" framework="" version="" source="sam0/drivers/sercom/sercom_pinout.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_dma/qs_spi_dma_use.h" framework="" version="" source="sam0/drivers/sercom/spi/quick_start_dma/qs_spi_dma_use.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_master/qs_spi_master_basic.h" framework="" version="" source="sam0/drivers/sercom/spi/quick_start_master/qs_spi_master_basic.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_master_callback/qs_spi_master_callback.h" framework="" version="" source="sam0/drivers/sercom/spi/quick_start_master_callback/qs_spi_master_callback.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_slave/qs_spi_slave_basic.h" framework="" version="" source="sam0/drivers/sercom/spi/quick_start_slave/qs_spi_slave_basic.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_slave_callback/qs_spi_slave_callback.h" framework="" version="" source="sam0/drivers/sercom/spi/quick_start_slave_callback/qs_spi_slave_callback.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/spi/spi.c" framework="" version="" source="sam0/drivers/sercom/spi/spi.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/spi/spi.h" framework="" version="" source="sam0/drivers/sercom/spi/spi.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/spi/spi_interrupt.c" framework="" version="" source="sam0/drivers/sercom/spi/spi_interrupt.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/spi/spi_interrupt.h" framework="" version="" source="sam0/drivers/sercom/spi/spi_interrupt.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/usart/quick_start/qs_usart_basic_use.h" framework="" version="" source="sam0/drivers/sercom/usart/quick_start/qs_usart_basic_use.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/usart/quick_start_callback/qs_usart_callback.h" framework="" version="" source="sam0/drivers/sercom/usart/quick_start_callback/qs_usart_callback.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/usart/quick_start_dma/qs_usart_dma_use.h" framework="" version="" source="sam0/drivers/sercom/usart/quick_start_dma/qs_usart_dma_use.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/usart/quick_start_lin/qs_lin.h" framework="" version="" source="sam0/drivers/sercom/usart/quick_start_lin/qs_lin.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/usart/usart.c" framework="" version="" source="sam0/drivers/sercom/usart/usart.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/usart/usart.h" framework="" version="" source="sam0/drivers/sercom/usart/usart.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/usart/usart_interrupt.c" framework="" version="" source="sam0/drivers/sercom/usart/usart_interrupt.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/drivers/sercom/usart/usart_interrupt.h" framework="" version="" source="sam0/drivers/sercom/usart/usart_interrupt.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/drivers/system/clock/clock.h" framework="" version="" source="sam0/drivers/system/clock/clock.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/drivers/system/clock/clock_saml21/clock.c" framework="" version="" source="sam0/drivers/system/clock/clock_saml21/clock.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/drivers/system/clock/clock_saml21/clock_config_check.h" framework="" version="" source="sam0/drivers/system/clock/clock_saml21/clock_config_check.h" changed="False" content-id="Atmel.ASF" />
@@ -170,7 +253,7 @@
           <file path="src/ASF/sam0/utils/cmsis/saml21/source/system_saml21.h" framework="" version="" source="sam0/utils/cmsis/saml21/source/system_saml21.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/utils/compiler.h" framework="" version="" source="sam0/utils/compiler.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/utils/header_files/io.h" framework="" version="" source="sam0/utils/header_files/io.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/utils/linker_scripts/saml21/gcc/saml21g18b_flash.ld" framework="" version="" source="sam0/utils/linker_scripts/saml21/gcc/saml21g18b_flash.ld" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/utils/linker_scripts/saml21/gcc/saml21j18b_flash.ld" framework="" version="" source="sam0/utils/linker_scripts/saml21/gcc/saml21j18b_flash.ld" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/utils/make/Makefile.sam.in" framework="" version="" source="sam0/utils/make/Makefile.sam.in" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/utils/preprocessor/mrecursion.h" framework="" version="" source="sam0/utils/preprocessor/mrecursion.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/utils/preprocessor/mrepeat.h" framework="" version="" source="sam0/utils/preprocessor/mrepeat.h" changed="False" content-id="Atmel.ASF" />
@@ -178,6 +261,9 @@
           <file path="src/ASF/sam0/utils/preprocessor/stringz.h" framework="" version="" source="sam0/utils/preprocessor/stringz.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/utils/preprocessor/tpaste.h" framework="" version="" source="sam0/utils/preprocessor/tpaste.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/utils/status_codes.h" framework="" version="" source="sam0/utils/status_codes.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/utils/stdio/read.c" framework="" version="" source="sam0/utils/stdio/read.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/utils/stdio/stdio_serial/stdio_serial.h" framework="" version="" source="sam0/utils/stdio/stdio_serial/stdio_serial.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam0/utils/stdio/write.c" framework="" version="" source="sam0/utils/stdio/write.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam0/utils/syscalls/gcc/syscalls.c" framework="" version="" source="sam0/utils/syscalls/gcc/syscalls.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/CMSIS/ATMEL-disclaimer.txt" framework="" version="" source="thirdparty/CMSIS/ATMEL-disclaimer.txt" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/CMSIS/CMSIS_END_USER_LICENCE_AGREEMENT.pdf" framework="" version="" source="thirdparty/CMSIS/CMSIS_END_USER_LICENCE_AGREEMENT.pdf" changed="False" content-id="Atmel.ASF" />
@@ -189,153 +275,17 @@
           <file path="src/ASF/thirdparty/CMSIS/Lib/license.txt" framework="" version="" source="thirdparty/CMSIS/Lib/license.txt" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/CMSIS/README.txt" framework="" version="" source="thirdparty/CMSIS/README.txt" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/CMSIS/license.txt" framework="" version="" source="thirdparty/CMSIS/license.txt" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/nvm/nvm.c" framework="" version="3.40.0" source="sam0\drivers\nvm\nvm.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/nvm/quick_start_basic/qs_nvm_basic.h" framework="" version="3.40.0" source="sam0\drivers\nvm\quick_start_basic\qs_nvm_basic.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/nvm/nvm.h" framework="" version="3.40.0" source="sam0\drivers\nvm\nvm.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/port/port.c" framework="" version="3.40.0" source="sam0\drivers\port\port.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/port/quick_start/qs_port_basic.h" framework="" version="3.40.0" source="sam0\drivers\port\quick_start\qs_port_basic.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/port/port.h" framework="" version="3.40.0" source="sam0\drivers\port\port.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/utils/stdio/stdio_serial/stdio_serial.h" framework="" version="3.40.0" source="sam0\utils\stdio\stdio_serial\stdio_serial.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/serial/sam0_usart/usart_serial.h" framework="" version="3.40.0" source="common\services\serial\sam0_usart\usart_serial.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/serial/serial.h" framework="" version="3.40.0" source="common\services\serial\serial.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/sercom_interrupt.c" framework="" version="3.40.0" source="sam0\drivers\sercom\sercom_interrupt.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/sercom.c" framework="" version="3.40.0" source="sam0\drivers\sercom\sercom.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/sercom_interrupt.h" framework="" version="3.40.0" source="sam0\drivers\sercom\sercom_interrupt.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/sercom_pinout.h" framework="" version="3.40.0" source="sam0\drivers\sercom\sercom_pinout.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/sercom.h" framework="" version="3.40.0" source="sam0\drivers\sercom\sercom.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/i2c/i2c_master_interrupt.h" framework="" version="3.40.0" source="sam0\drivers\sercom\i2c\i2c_master_interrupt.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/i2c/i2c_common.h" framework="" version="3.40.0" source="sam0\drivers\sercom\i2c\i2c_common.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/i2c/quick_start_master_callback/qs_i2c_master_callback.h" framework="" version="3.40.0" source="sam0\drivers\sercom\i2c\quick_start_master_callback\qs_i2c_master_callback.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/i2c/quick_start_master/qs_i2c_master_basic_use.h" framework="" version="3.40.0" source="sam0\drivers\sercom\i2c\quick_start_master\qs_i2c_master_basic_use.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/i2c/i2c_master.h" framework="" version="3.40.0" source="sam0\drivers\sercom\i2c\i2c_master.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/i2c/quick_start_master_dma/qs_i2c_master_dma.h" framework="" version="3.40.0" source="sam0\drivers\sercom\i2c\quick_start_master_dma\qs_i2c_master_dma.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master.c" framework="" version="3.40.0" source="sam0\drivers\sercom\i2c\i2c_sam0\i2c_master.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/i2c/i2c_sam0/i2c_master_interrupt.c" framework="" version="3.40.0" source="sam0\drivers\sercom\i2c\i2c_sam0\i2c_master_interrupt.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/usart/usart.c" framework="" version="3.40.0" source="sam0\drivers\sercom\usart\usart.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/usart/usart_interrupt.c" framework="" version="3.40.0" source="sam0\drivers\sercom\usart\usart_interrupt.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/usart/quick_start_lin/qs_lin.h" framework="" version="3.40.0" source="sam0\drivers\sercom\usart\quick_start_lin\qs_lin.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/usart/quick_start/qs_usart_basic_use.h" framework="" version="3.40.0" source="sam0\drivers\sercom\usart\quick_start\qs_usart_basic_use.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/usart/usart_interrupt.h" framework="" version="3.40.0" source="sam0\drivers\sercom\usart\usart_interrupt.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/usart/quick_start_callback/qs_usart_callback.h" framework="" version="3.40.0" source="sam0\drivers\sercom\usart\quick_start_callback\qs_usart_callback.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/usart/usart.h" framework="" version="3.40.0" source="sam0\drivers\sercom\usart\usart.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/usart/quick_start_dma/qs_usart_dma_use.h" framework="" version="3.40.0" source="sam0\drivers\sercom\usart\quick_start_dma\qs_usart_dma_use.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/tcc_callback.c" framework="" version="3.40.0" source="sam0\drivers\tcc\tcc_callback.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/tcc.c" framework="" version="3.40.0" source="sam0\drivers\tcc\tcc.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/quick_start_faultn/qs_tcc_faultn.h" framework="" version="3.40.0" source="sam0\drivers\tcc\quick_start_faultn\qs_tcc_faultn.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/quick_start_buffering/qs_tcc_buffering.h" framework="" version="3.40.0" source="sam0\drivers\tcc\quick_start_buffering\qs_tcc_buffering.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/quick_start_timer/qs_tcc_timer.h" framework="" version="3.40.0" source="sam0\drivers\tcc\quick_start_timer\qs_tcc_timer.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/quick_start_faultx/qs_tcc_faultx.h" framework="" version="3.40.0" source="sam0\drivers\tcc\quick_start_faultx\qs_tcc_faultx.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/quick_start_dma/qs_tcc_dma.h" framework="" version="3.40.0" source="sam0\drivers\tcc\quick_start_dma\qs_tcc_dma.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/tcc.h" framework="" version="3.40.0" source="sam0\drivers\tcc\tcc.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/quick_start_callback/qs_tcc_callback.h" framework="" version="3.40.0" source="sam0\drivers\tcc\quick_start_callback\qs_tcc_callback.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/quick_start/qs_tcc_basic.h" framework="" version="3.40.0" source="sam0\drivers\tcc\quick_start\qs_tcc_basic.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/tcc/tcc_callback.h" framework="" version="3.40.0" source="sam0\drivers\tcc\tcc_callback.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/utils/stdio/read.c" framework="" version="3.40.0" source="sam0\utils\stdio\read.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/utils/stdio/write.c" framework="" version="3.40.0" source="sam0\utils\stdio\write.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common2/services/delay/sam0/systick_counter.c" framework="" version="3.40.0" source="common2\services\delay\sam0\systick_counter.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common2/services/delay/delay.h" framework="" version="3.40.0" source="common2\services\delay\delay.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common2/services/delay/sam0/systick_counter.h" framework="" version="3.40.0" source="common2\services\delay\sam0\systick_counter.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmbus.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmbus.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/m2m_ssl.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\m2m_ssl.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\m2m_hif.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/m2m_ate_mode.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\m2m_ate_mode.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmi2c.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmi2c.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/m2m_crypto.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\m2m_crypto.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/socket/source/socket.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\socket\source\socket.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/m2m_wifi.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\m2m_wifi.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmuart.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmuart.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/bsp/source/nm_bsp_saml21.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\bsp\source\nm_bsp_saml21.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/spi_flash/source/spi_flash.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\spi_flash\source\spi_flash.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/bus_wrapper/source/nm_bus_wrapper_saml21.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\bus_wrapper\source\nm_bus_wrapper_saml21.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/common/source/nm_common.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\common\source\nm_common.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/m2m_ota.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\m2m_ota.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmasic.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmasic.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmdrv.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmdrv.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/m2m_periph.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\m2m_periph.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmspi.c" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmspi.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/WINC1500_SW_API.chm" framework="" version="3.40.0" source="common\components\wifi\winc1500\WINC1500_SW_API.chm" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/socket/include/m2m_socket_host_if.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\socket\include\m2m_socket_host_if.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/common/include/nm_common.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\common\include\nm_common.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/common/include/nm_debug.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\common\include\nm_debug.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/socket/include/socket.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\socket\include\socket.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/include/m2m_wifi.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\include\m2m_wifi.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/include/m2m_crypto.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\include\m2m_crypto.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmdrv.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmdrv.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp_internal.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\bsp\include\nm_bsp_internal.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmasic.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmasic.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/include/m2m_ota.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\include\m2m_ota.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmi2c.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmi2c.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/include/m2m_ate_mode.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\include\m2m_ate_mode.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/include/m2m_types.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\include\m2m_types.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/include/m2m_ssl.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\include\m2m_ssl.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmbus.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmbus.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmspi.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmspi.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/programmer/programmer.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\programmer\programmer.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/m2m_hif.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\m2m_hif.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp_saml21.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\bsp\include\nm_bsp_saml21.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/include/m2m_periph.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\include\m2m_periph.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/source/nmuart.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\source\nmuart.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/bsp/include/nm_bsp.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\bsp\include\nm_bsp.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/bus_wrapper/include/nm_bus_wrapper.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\bus_wrapper\include\nm_bus_wrapper.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/driver/include/ecc_types.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\driver\include\ecc_types.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/socket/source/socket_internal.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\socket\source\socket_internal.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/spi_flash/include/spi_flash.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\spi_flash\include\spi_flash.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/programmer/programmer_apis.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\programmer\programmer_apis.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/components/wifi/winc1500/spi_flash/include/spi_flash_map.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\spi_flash\include\spi_flash_map.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/Config/conf_winc.h" framework="" version="3.40.0" source="common\components\wifi\winc1500\module_config\saml21\conf_winc.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/extint/extint_callback.c" framework="" version="3.40.0" source="sam0\drivers\extint\extint_callback.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/extint/extint_callback.h" framework="" version="3.40.0" source="sam0\drivers\extint\extint_callback.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/extint/extint.h" framework="" version="3.40.0" source="sam0\drivers\extint\extint.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/Config/conf_extint.h" framework="" version="3.40.0" source="sam0\drivers\extint\module_config\conf_extint.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/extint/extint_sam_l_c/extint.c" framework="" version="3.40.0" source="sam0\drivers\extint\extint_sam_l_c\extint.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/spi/spi_interrupt.c" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\spi_interrupt.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/spi/spi.c" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\spi.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_dma/qs_spi_dma_use.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\quick_start_dma\qs_spi_dma_use.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/spi/spi_interrupt.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\spi_interrupt.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_master_callback/qs_spi_master_callback.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\quick_start_master_callback\qs_spi_master_callback.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/spi/spi.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\spi.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_slave/qs_spi_slave_basic.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\quick_start_slave\qs_spi_slave_basic.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_slave_callback/qs_spi_slave_callback.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\quick_start_slave_callback\qs_spi_slave_callback.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam0/drivers/sercom/spi/quick_start_master/qs_spi_master_basic.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\quick_start_master\qs_spi_master_basic.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/Config/conf_spi.h" framework="" version="3.40.0" source="sam0\drivers\sercom\spi\module_config\conf_spi.h" changed="False" content-id="Atmel.ASF" />
         </files>
-        <documentation help="http://asf.atmel.com/docs/3.40.0/common.applications.user_application.sam0_system.user_board.atsaml21g18b/html/index.html" />
+        <documentation help="http://asf.atmel.com/docs/3.44.0/common.components.wifi.winc1500.serial_bridge_example.saml21_xplained_pro_b/html/index.html" />
         <offline-documentation help="" />
         <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.36.1" />
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.44.0" />
         </dependencies>
-        <project id="common.applications.user_application.sam0_system.user_board.atsaml21g18b" value="Add" config="" content-id="Atmel.ASF" />
-        <board id="board.user_board.saml21" value="Add" config="" content-id="Atmel.ASF" />
+        <project id="common.components.wifi.winc1500.serial_bridge_example.saml21_xplained_pro_b" value="Add" config="" content-id="Atmel.ASF" />
+        <board id="board.saml21_xplained_pro_b" value="Add" config="" content-id="Atmel.ASF" />
       </framework-data>
     </AsfFrameworkConfig>
-    <avrtool>
-    </avrtool>
-    <avrtoolserialnumber>ATML2241050200009994</avrtoolserialnumber>
-    <avrdeviceexpectedsignature>0x1081020F</avrdeviceexpectedsignature>
-    <avrtoolinterface>SWD</avrtoolinterface>
-    <com_atmel_avrdbg_tool_atmelice>
-      <ToolOptions>
-        <InterfaceProperties>
-          <SwdClock>2000000</SwdClock>
-        </InterfaceProperties>
-        <InterfaceName>SWD</InterfaceName>
-      </ToolOptions>
-      <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J41800094717</ToolNumber>
-      <ToolName>Atmel-ICE</ToolName>
-    </com_atmel_avrdbg_tool_atmelice>
-    <avrtoolinterfaceclock>2000000</avrtoolinterfaceclock>
-    <com_atmel_avrdbg_tool_edbg>
-      <ToolOptions>
-        <InterfaceProperties>
-          <SwdClock>2000000</SwdClock>
-        </InterfaceProperties>
-        <InterfaceName>SWD</InterfaceName>
-      </ToolOptions>
-      <ToolType>com.atmel.avrdbg.tool.edbg</ToolType>
-      <ToolNumber>ATML2241050200009994</ToolNumber>
-      <ToolName>EDBG MSD</ToolName>
-    </com_atmel_avrdbg_tool_edbg>
+    <avrtool />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -348,19 +298,19 @@
   <armgcc.compiler.symbols.DefSymbols>
     <ListValues>
       <Value>NDEBUG</Value>
-      <Value>BOARD=USER_BOARD</Value>
+      <Value>__SAML21J18B__</Value>
+      <Value>BOARD=SAML21_XPLAINED_PRO</Value>
       <Value>ARM_MATH_CM0PLUS=true</Value>
-      <Value>I2C_MASTER_CALLBACK_MODE=true</Value>
-      <Value>USART_CALLBACK_MODE=true</Value>
-      <Value>TCC_ASYNC=true</Value>
-      <Value>SYSTICK_MODE</Value>
       <Value>EXTINT_CALLBACK_MODE=true</Value>
       <Value>SPI_CALLBACK_MODE=true</Value>
+      <Value>USART_CALLBACK_MODE=true</Value>
+      <Value>SYSTICK_MODE</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>../src/ASF/common/boards</Value>
+      <Value>../src/ASF/common/components/wifi/winc1500/host_drv</Value>
+      <Value>../src/ASF/sam0/drivers/port</Value>
       <Value>../src/ASF/sam0/utils</Value>
       <Value>../src/ASF/sam0/utils/header_files</Value>
       <Value>../src/ASF/sam0/utils/preprocessor</Value>
@@ -369,34 +319,29 @@
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam0/utils/cmsis/saml21/include_b</Value>
       <Value>../src/ASF/sam0/utils/cmsis/saml21/source</Value>
+      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/drivers/sercom</Value>
       <Value>../src/ASF/sam0/drivers/system</Value>
       <Value>../src/ASF/sam0/drivers/system/clock/clock_saml21</Value>
       <Value>../src/ASF/sam0/drivers/system/clock</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt/system_interrupt_saml21</Value>
-      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
       <Value>../src/ASF/sam0/drivers/system/power/power_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/power</Value>
       <Value>../src/ASF/sam0/drivers/system/reset/reset_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/reset</Value>
-      <Value>../src/ASF/common2/boards/user_board</Value>
-      <Value>../src</Value>
-      <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/nvm</Value>
-      <Value>../src/ASF/sam0/drivers/port</Value>
-      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/common/services/serial</Value>
-      <Value>../src/ASF/sam0/drivers/sercom</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
-      <Value>../src/ASF/common/components/wifi/winc1500</Value>
       <Value>../src/ASF/sam0/drivers/extint</Value>
-      <Value>../src/ASF/sam0/drivers/extint/extint_sam_l_c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
+      <Value>../src/ASF/common/services/serial</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
+      <Value>../src/ASF/sam0/boards/saml21_xplained_pro_b</Value>
+      <Value>../src/ASF/sam0/boards</Value>
+      <Value>../src/ASF/common/boards</Value>
+      <Value>../src</Value>
+      <Value>../src/config</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -417,10 +362,11 @@
     </ListValues>
   </armgcc.linker.libraries.LibrarySearchPaths>
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
-  <armgcc.linker.miscellaneous.LinkerFlags>-Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam0/utils/linker_scripts/saml21/gcc/saml21g18b_flash.ld</armgcc.linker.miscellaneous.LinkerFlags>
+  <armgcc.linker.miscellaneous.LinkerFlags>-Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam0/utils/linker_scripts/saml21/gcc/saml21j18b_flash.ld</armgcc.linker.miscellaneous.LinkerFlags>
   <armgcc.assembler.general.IncludePaths>
     <ListValues>
-      <Value>../src/ASF/common/boards</Value>
+      <Value>../src/ASF/common/components/wifi/winc1500/host_drv</Value>
+      <Value>../src/ASF/sam0/drivers/port</Value>
       <Value>../src/ASF/sam0/utils</Value>
       <Value>../src/ASF/sam0/utils/header_files</Value>
       <Value>../src/ASF/sam0/utils/preprocessor</Value>
@@ -429,40 +375,36 @@
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam0/utils/cmsis/saml21/include_b</Value>
       <Value>../src/ASF/sam0/utils/cmsis/saml21/source</Value>
+      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/drivers/sercom</Value>
       <Value>../src/ASF/sam0/drivers/system</Value>
       <Value>../src/ASF/sam0/drivers/system/clock/clock_saml21</Value>
       <Value>../src/ASF/sam0/drivers/system/clock</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt/system_interrupt_saml21</Value>
-      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
       <Value>../src/ASF/sam0/drivers/system/power/power_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/power</Value>
       <Value>../src/ASF/sam0/drivers/system/reset/reset_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/reset</Value>
-      <Value>../src/ASF/common2/boards/user_board</Value>
-      <Value>../src</Value>
-      <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/nvm</Value>
-      <Value>../src/ASF/sam0/drivers/port</Value>
-      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/common/services/serial</Value>
-      <Value>../src/ASF/sam0/drivers/sercom</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
-      <Value>../src/ASF/common/components/wifi/winc1500</Value>
       <Value>../src/ASF/sam0/drivers/extint</Value>
-      <Value>../src/ASF/sam0/drivers/extint/extint_sam_l_c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
+      <Value>../src/ASF/common/services/serial</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
+      <Value>../src/ASF/sam0/boards/saml21_xplained_pro_b</Value>
+      <Value>../src/ASF/sam0/boards</Value>
+      <Value>../src/ASF/common/boards</Value>
+      <Value>../src</Value>
+      <Value>../src/config</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
-  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=USER_BOARD -DI2C_MASTER_CALLBACK_MODE=true -DUSART_CALLBACK_MODE=true -DTCC_ASYNC=true -DSYSTICK_MODE -DEXTINT_CALLBACK_MODE=true -DSPI_CALLBACK_MODE=true</armgcc.preprocessingassembler.general.AssemblerFlags>
+  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=SAML21_XPLAINED_PRO -DEXTINT_CALLBACK_MODE=true -DSPI_CALLBACK_MODE=true -DSYSTICK_MODE -DUSART_CALLBACK_MODE=true -D__SAML21J18B__</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
-      <Value>../src/ASF/common/boards</Value>
+      <Value>../src/ASF/common/components/wifi/winc1500/host_drv</Value>
+      <Value>../src/ASF/sam0/drivers/port</Value>
       <Value>../src/ASF/sam0/utils</Value>
       <Value>../src/ASF/sam0/utils/header_files</Value>
       <Value>../src/ASF/sam0/utils/preprocessor</Value>
@@ -471,34 +413,29 @@
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam0/utils/cmsis/saml21/include_b</Value>
       <Value>../src/ASF/sam0/utils/cmsis/saml21/source</Value>
+      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/drivers/sercom</Value>
       <Value>../src/ASF/sam0/drivers/system</Value>
       <Value>../src/ASF/sam0/drivers/system/clock/clock_saml21</Value>
       <Value>../src/ASF/sam0/drivers/system/clock</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt/system_interrupt_saml21</Value>
-      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
       <Value>../src/ASF/sam0/drivers/system/power/power_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/power</Value>
       <Value>../src/ASF/sam0/drivers/system/reset/reset_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/reset</Value>
-      <Value>../src/ASF/common2/boards/user_board</Value>
-      <Value>../src</Value>
-      <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/nvm</Value>
-      <Value>../src/ASF/sam0/drivers/port</Value>
-      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/common/services/serial</Value>
-      <Value>../src/ASF/sam0/drivers/sercom</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
-      <Value>../src/ASF/common/components/wifi/winc1500</Value>
       <Value>../src/ASF/sam0/drivers/extint</Value>
-      <Value>../src/ASF/sam0/drivers/extint/extint_sam_l_c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
+      <Value>../src/ASF/common/services/serial</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
+      <Value>../src/ASF/sam0/boards/saml21_xplained_pro_b</Value>
+      <Value>../src/ASF/sam0/boards</Value>
+      <Value>../src/ASF/common/boards</Value>
+      <Value>../src</Value>
+      <Value>../src/config</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -515,63 +452,57 @@
   <armgcc.compiler.symbols.DefSymbols>
     <ListValues>
       <Value>DEBUG</Value>
-      <Value>BOARD=USER_BOARD</Value>
+      <Value>__SAMR30G18A__</Value>
+      <Value>BOARD=SAMR30_XPLAINED_PRO</Value>
       <Value>ARM_MATH_CM0PLUS=true</Value>
-      <Value>I2C_MASTER_CALLBACK_MODE=true</Value>
-      <Value>USART_CALLBACK_MODE=true</Value>
-      <Value>TCC_ASYNC=true</Value>
-      <Value>ATCA_HAL_I2C</Value>
-      <Value>SYSTICK_MODE</Value>
       <Value>EXTINT_CALLBACK_MODE=true</Value>
       <Value>SPI_CALLBACK_MODE=true</Value>
+      <Value>USART_CALLBACK_MODE=true</Value>
+      <Value>SYSTICK_MODE</Value>
       <Value>NM_EDGE_INTERRUPT</Value>
-      <Value>CONF_WINC_USE_SPI</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
     <ListValues>
-      <Value>../src/ASF/common/boards</Value>
+      <Value>../src/ASF/common/components/wifi/winc1500/host_drv</Value>
+      <Value>../src/ASF/sam0/drivers/port</Value>
       <Value>../src/ASF/sam0/utils</Value>
       <Value>../src/ASF/sam0/utils/header_files</Value>
       <Value>../src/ASF/sam0/utils/preprocessor</Value>
       <Value>../src/ASF/thirdparty/CMSIS/Include</Value>
       <Value>../src/ASF/thirdparty/CMSIS/Lib/GCC</Value>
       <Value>../src/ASF/common/utils</Value>
+      <Value>../src/ASF/sam0/utils/cmsis/saml21/include_b</Value>
+      <Value>../src/ASF/sam0/utils/cmsis/saml21/source</Value>
+      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/drivers/sercom</Value>
       <Value>../src/ASF/sam0/drivers/system</Value>
       <Value>../src/ASF/sam0/drivers/system/clock/clock_saml21</Value>
       <Value>../src/ASF/sam0/drivers/system/clock</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt/system_interrupt_saml21</Value>
-      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
       <Value>../src/ASF/sam0/drivers/system/power/power_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/power</Value>
       <Value>../src/ASF/sam0/drivers/system/reset/reset_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/reset</Value>
-      <Value>../src/ASF/common2/boards/user_board</Value>
-      <Value>../src</Value>
-      <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/nvm</Value>
-      <Value>../src/ASF/sam0/drivers/port</Value>
-      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/common/services/serial</Value>
-      <Value>../src/ASF/sam0/drivers/sercom</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
-      <Value>../src/CryptoAuth/lib</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
-      <Value>../../saml21g18b_sensor_board_demo/src/ASF/thirdparty/wireless/ble_sdk/services/console</Value>
-      <Value>../src/ASF/common/components/wifi/winc1500</Value>
       <Value>../src/ASF/sam0/drivers/extint</Value>
-      <Value>../src/ASF/sam0/drivers/extint/extint_sam_l_c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
-      <Value>../src/ASF/common/components/wifi/winc1500/driver/include</Value>
+      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
+      <Value>../src/ASF/common/services/serial</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
+      <Value>../src/ASF/sam0/boards/saml21_xplained_pro_b</Value>
+      <Value>../src/ASF/sam0/boards</Value>
+      <Value>../src/ASF/common/boards</Value>
+      <Value>../src</Value>
+      <Value>../src/config</Value>
       <Value>../src/ASF/sam0/utils/cmsis/samr30/include</Value>
       <Value>../src/ASF/sam0/utils/cmsis/samr30/source</Value>
+      <Value>../src/ASF/common/components/wifi/winc1500/host_drv/driver/source</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
   <armgcc.compiler.optimization.OtherFlags>-fdata-sections</armgcc.compiler.optimization.OtherFlags>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
   <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
@@ -591,10 +522,11 @@
   </armgcc.linker.libraries.LibrarySearchPaths>
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
   <armgcc.linker.memorysettings.ExternalRAM />
-  <armgcc.linker.miscellaneous.LinkerFlags>-Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam0/utils/linker_scripts/saml21/gcc/saml21g18b_flash.ld</armgcc.linker.miscellaneous.LinkerFlags>
+  <armgcc.linker.miscellaneous.LinkerFlags>-Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam0/utils/linker_scripts/saml21/gcc/saml21j18b_flash.ld</armgcc.linker.miscellaneous.LinkerFlags>
   <armgcc.assembler.general.IncludePaths>
     <ListValues>
-      <Value>../src/ASF/common/boards</Value>
+      <Value>../src/ASF/common/components/wifi/winc1500/host_drv</Value>
+      <Value>../src/ASF/sam0/drivers/port</Value>
       <Value>../src/ASF/sam0/utils</Value>
       <Value>../src/ASF/sam0/utils/header_files</Value>
       <Value>../src/ASF/sam0/utils/preprocessor</Value>
@@ -603,41 +535,37 @@
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam0/utils/cmsis/saml21/include_b</Value>
       <Value>../src/ASF/sam0/utils/cmsis/saml21/source</Value>
+      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/drivers/sercom</Value>
       <Value>../src/ASF/sam0/drivers/system</Value>
       <Value>../src/ASF/sam0/drivers/system/clock/clock_saml21</Value>
       <Value>../src/ASF/sam0/drivers/system/clock</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt/system_interrupt_saml21</Value>
-      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
       <Value>../src/ASF/sam0/drivers/system/power/power_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/power</Value>
       <Value>../src/ASF/sam0/drivers/system/reset/reset_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/reset</Value>
-      <Value>../src/ASF/common2/boards/user_board</Value>
-      <Value>../src</Value>
-      <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/nvm</Value>
-      <Value>../src/ASF/sam0/drivers/port</Value>
-      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/common/services/serial</Value>
-      <Value>../src/ASF/sam0/drivers/sercom</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
-      <Value>../src/ASF/common/components/wifi/winc1500</Value>
       <Value>../src/ASF/sam0/drivers/extint</Value>
-      <Value>../src/ASF/sam0/drivers/extint/extint_sam_l_c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
+      <Value>../src/ASF/common/services/serial</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
+      <Value>../src/ASF/sam0/boards/saml21_xplained_pro_b</Value>
+      <Value>../src/ASF/sam0/boards</Value>
+      <Value>../src/ASF/common/boards</Value>
+      <Value>../src</Value>
+      <Value>../src/config</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
-  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=USER_BOARD -DI2C_MASTER_CALLBACK_MODE=true -DUSART_CALLBACK_MODE=true -DTCC_ASYNC=true -DSYSTICK_MODE -DEXTINT_CALLBACK_MODE=true -DSPI_CALLBACK_MODE=true</armgcc.preprocessingassembler.general.AssemblerFlags>
+  <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DBOARD=SAML21_XPLAINED_PRO -DEXTINT_CALLBACK_MODE=true -DSPI_CALLBACK_MODE=true -DSYSTICK_MODE -DUSART_CALLBACK_MODE=true -D__SAML21J18B__</armgcc.preprocessingassembler.general.AssemblerFlags>
   <armgcc.preprocessingassembler.general.IncludePaths>
     <ListValues>
-      <Value>../src/ASF/common/boards</Value>
+      <Value>../src/ASF/common/components/wifi/winc1500/host_drv</Value>
+      <Value>../src/ASF/sam0/drivers/port</Value>
       <Value>../src/ASF/sam0/utils</Value>
       <Value>../src/ASF/sam0/utils/header_files</Value>
       <Value>../src/ASF/sam0/utils/preprocessor</Value>
@@ -646,34 +574,29 @@
       <Value>../src/ASF/common/utils</Value>
       <Value>../src/ASF/sam0/utils/cmsis/saml21/include_b</Value>
       <Value>../src/ASF/sam0/utils/cmsis/saml21/source</Value>
+      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/drivers/sercom</Value>
       <Value>../src/ASF/sam0/drivers/system</Value>
       <Value>../src/ASF/sam0/drivers/system/clock/clock_saml21</Value>
       <Value>../src/ASF/sam0/drivers/system/clock</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt/system_interrupt_saml21</Value>
-      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
       <Value>../src/ASF/sam0/drivers/system/power/power_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/power</Value>
       <Value>../src/ASF/sam0/drivers/system/reset/reset_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/reset</Value>
-      <Value>../src/ASF/common2/boards/user_board</Value>
-      <Value>../src</Value>
-      <Value>../src/config</Value>
-      <Value>../src/ASF/sam0/drivers/nvm</Value>
-      <Value>../src/ASF/sam0/drivers/port</Value>
-      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
-      <Value>../src/ASF/common/services/serial</Value>
-      <Value>../src/ASF/sam0/drivers/sercom</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/i2c/i2c_sam0</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
-      <Value>../src/ASF/sam0/drivers/tcc</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
-      <Value>../src/ASF/common/components/wifi/winc1500</Value>
       <Value>../src/ASF/sam0/drivers/extint</Value>
-      <Value>../src/ASF/sam0/drivers/extint/extint_sam_l_c</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
+      <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
+      <Value>../src/ASF/common/services/serial</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/usart</Value>
+      <Value>../src/ASF/sam0/boards/saml21_xplained_pro_b</Value>
+      <Value>../src/ASF/sam0/boards</Value>
+      <Value>../src/ASF/common/boards</Value>
+      <Value>../src</Value>
+      <Value>../src/config</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -684,8 +607,6 @@
     <Folder Include="src\" />
     <Folder Include="src\ASF\" />
     <Folder Include="src\ASF\common2\" />
-    <Folder Include="src\ASF\common2\boards\" />
-    <Folder Include="src\ASF\common2\boards\user_board\" />
     <Folder Include="src\ASF\common2\services\" />
     <Folder Include="src\ASF\common2\services\delay\" />
     <Folder Include="src\ASF\common2\services\delay\sam0\" />
@@ -694,44 +615,40 @@
     <Folder Include="src\ASF\common\components\" />
     <Folder Include="src\ASF\common\components\wifi\" />
     <Folder Include="src\ASF\common\components\wifi\winc1500\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\bsp\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\bsp\include\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\bsp\source\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\bus_wrapper\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\bus_wrapper\include\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\bus_wrapper\source\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\common\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\common\include\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\common\source\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\driver\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\driver\include\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\driver\source\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\programmer\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\socket\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\socket\include\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\socket\source\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\spi_flash\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\spi_flash\include\" />
-    <Folder Include="src\ASF\common\components\wifi\winc1500\spi_flash\source\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\bsp\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\bsp\include\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\bsp\source\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\bus_wrapper\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\bus_wrapper\include\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\bus_wrapper\source\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\common\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\common\include\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\common\source\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\include\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\programmer\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\socket\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\socket\include\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\socket\source\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\spi_flash\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\spi_flash\include\" />
+    <Folder Include="src\ASF\common\components\wifi\winc1500\host_drv\spi_flash\source\" />
     <Folder Include="src\ASF\common\services\" />
     <Folder Include="src\ASF\common\services\serial\" />
     <Folder Include="src\ASF\common\services\serial\sam0_usart\" />
     <Folder Include="src\ASF\common\utils\" />
     <Folder Include="src\ASF\common\utils\interrupt\" />
     <Folder Include="src\ASF\sam0\" />
+    <Folder Include="src\ASF\sam0\boards\" />
+    <Folder Include="src\ASF\sam0\boards\samr30_xplained_pro" />
     <Folder Include="src\ASF\sam0\drivers\" />
     <Folder Include="src\ASF\sam0\drivers\extint\" />
     <Folder Include="src\ASF\sam0\drivers\extint\extint_sam_l_c\" />
-    <Folder Include="src\ASF\sam0\drivers\nvm\" />
-    <Folder Include="src\ASF\sam0\drivers\nvm\quick_start_basic\" />
     <Folder Include="src\ASF\sam0\drivers\port\" />
     <Folder Include="src\ASF\sam0\drivers\port\quick_start\" />
     <Folder Include="src\ASF\sam0\drivers\sercom\" />
-    <Folder Include="src\ASF\sam0\drivers\sercom\i2c\" />
-    <Folder Include="src\ASF\sam0\drivers\sercom\i2c\i2c_sam0\" />
-    <Folder Include="src\ASF\sam0\drivers\sercom\i2c\quick_start_master\" />
-    <Folder Include="src\ASF\sam0\drivers\sercom\i2c\quick_start_master_callback\" />
-    <Folder Include="src\ASF\sam0\drivers\sercom\i2c\quick_start_master_dma\" />
     <Folder Include="src\ASF\sam0\drivers\sercom\spi\" />
     <Folder Include="src\ASF\sam0\drivers\sercom\spi\quick_start_dma\" />
     <Folder Include="src\ASF\sam0\drivers\sercom\spi\quick_start_master\" />
@@ -754,14 +671,6 @@
     <Folder Include="src\ASF\sam0\drivers\system\power\power_sam_l\" />
     <Folder Include="src\ASF\sam0\drivers\system\reset\" />
     <Folder Include="src\ASF\sam0\drivers\system\reset\reset_sam_l\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\quick_start\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\quick_start_buffering\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\quick_start_callback\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\quick_start_dma\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\quick_start_faultn\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\quick_start_faultx\" />
-    <Folder Include="src\ASF\sam0\drivers\tcc\quick_start_timer\" />
     <Folder Include="src\ASF\sam0\utils\" />
     <Folder Include="src\ASF\sam0\utils\cmsis\" />
     <Folder Include="src\ASF\sam0\utils\cmsis\samr30" />
@@ -787,201 +696,81 @@
     <Folder Include="src\ASF\thirdparty\CMSIS\Lib\" />
     <Folder Include="src\ASF\thirdparty\CMSIS\Lib\GCC\" />
     <Folder Include="src\config\" />
-    <Folder Include="src\CryptoAuth" />
-    <Folder Include="src\CryptoAuth\lib" />
-    <Folder Include="src\CryptoAuth\lib\atcacert" />
-    <Folder Include="src\CryptoAuth\lib\crypto" />
-    <Folder Include="src\CryptoAuth\lib\basic" />
-    <Folder Include="src\CryptoAuth\lib\crypto\hashes" />
-    <Folder Include="src\CryptoAuth\lib\hal" />
-    <Folder Include="src\CryptoAuth\lib\host" />
-    <Folder Include="src\CryptoAuth\lib\tls" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\ASF\sam0\drivers\extint\extint_sam_l_c\extint.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\bsp\include\nm_bsp.h">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="src\config\conf_spi.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_master\qs_spi_master_basic.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_slave_callback\qs_spi_slave_callback.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_slave\qs_spi_slave_basic.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\spi\spi.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_master_callback\qs_spi_master_callback.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\spi\spi_interrupt.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_dma\qs_spi_dma_use.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\sam0\drivers\sercom\spi\spi.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\bsp\include\nm_bsp_internal.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\sam0\drivers\sercom\spi\spi_interrupt.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\bsp\include\nm_bsp_samr30.h">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="src\config\conf_extint.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\extint\extint.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\sam0\drivers\extint\extint_callback.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\m2m_ate_mode.c">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="src\ASF\sam0\drivers\extint\extint_callback.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\config\conf_winc.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\spi_flash\include\spi_flash_map.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\programmer\programmer_apis.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\spi_flash\include\spi_flash.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\socket\source\socket_internal.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\include\ecc_types.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\bus_wrapper\include\nm_bus_wrapper.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\bsp\include\nm_bsp.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\source\nmuart.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\include\m2m_periph.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\bsp\include\nm_bsp_saml21.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\source\m2m_hif.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\programmer\programmer.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\source\nmspi.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\source\nmbus.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\include\m2m_ssl.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\include\m2m_types.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\include\m2m_ate_mode.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\source\nmi2c.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\include\m2m_ota.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\source\nmasic.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\bsp\include\nm_bsp_internal.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\bsp\source\nm_bsp_saml21.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\m2m_crypto.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\bus_wrapper\source\nm_bus_wrapper_saml21.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\m2m_hif.c">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\source\nmdrv.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\include\m2m_crypto.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\driver\include\m2m_wifi.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\socket\include\socket.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\common\include\nm_debug.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\components\wifi\winc1500\common\include\nm_common.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\common\source\nm_common.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\m2m_hif.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\m2m_ate_mode.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\m2m_ota.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\m2m_crypto.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\m2m_periph.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\m2m_hif.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\m2m_ssl.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\m2m_ota.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\m2m_wifi.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\m2m_periph.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmasic.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\m2m_ssl.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmasic.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\m2m_wifi.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmbus.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\nmasic.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmbus.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\nmbus.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmdrv.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\nmdrv.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmdrv.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\nmi2c.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmi2c.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\nmspi.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmi2c.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\driver\source\nmuart.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmspi.c">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="src\ASF\common\components\wifi\winc1500\socket\include\m2m_socket_host_if.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\socket\source\socket.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmspi.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\common\components\wifi\winc1500\spi_flash\source\spi_flash.c">
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmuart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\source\nmuart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\boards\samr30_xplained_pro\board_init.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\boards\samr30_xplained_pro\samr30_xplained_pro.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\ASF\sam0\utils\cmsis\samr30\include\component\ac.h">
@@ -1191,337 +980,58 @@
     <Compile Include="src\ASF\sam0\utils\cmsis\samr30\source\system_samr30.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\config\conf_console.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ecc_provision.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ecc_provision.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\common2\services\delay\sam0\systick_counter.h">
+    <None Include="src\asf.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\common2\services\delay\delay.h">
+    <None Include="src\config\conf_board.h">
       <SubType>compile</SubType>
     </None>
-    <Compile Include="src\ASF\common2\services\delay\sam0\systick_counter.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ASF\sam0\drivers\sercom\i2c\i2c_sam0\i2c_master.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ASF\sam0\drivers\sercom\i2c\i2c_sam0\i2c_master_interrupt.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ASF\sam0\utils\stdio\read.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ASF\sam0\utils\stdio\write.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_client.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_client.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_date.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_date.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_def.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_def.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_der.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_der.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_host_hw.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_host_hw.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_host_sw.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atcacert\atcacert_host_sw.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_bool.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_cfgs.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_cfgs.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_command.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_command.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_compiler.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_device.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_device.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_devtypes.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_iface.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_iface.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\atca_status.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\basic\atca_basic.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\basic\atca_basic.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\basic\atca_helpers.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\basic\atca_helpers.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\cryptoauthlib.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\atca_crypto_sw.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\atca_crypto_sw_ecdsa.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\atca_crypto_sw_ecdsa.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\atca_crypto_sw_rand.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\atca_crypto_sw_rand.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\atca_crypto_sw_sha1.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\atca_crypto_sw_sha1.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\atca_crypto_sw_sha2.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\atca_crypto_sw_sha2.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\hashes\sha1_routines.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\hashes\sha1_routines.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\hashes\sha2_routines.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\crypto\hashes\sha2_routines.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\hal\atca_hal.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\hal\atca_hal.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\hal\hal_samd21_i2c_asf.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\hal\hal_samd21_i2c_asf.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\hal\hal_samd21_timer_asf.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\host\atca_host.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\host\atca_host.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\tls\atcatls.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\tls\atcatls.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\tls\atcatls_cfg.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\CryptoAuth\lib\tls\atcatls_cfg.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\common\components\wifi\winc1500\WINC1500_SW_API.chm">
+    <None Include="src\config\conf_spi.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\drivers\tcc\tcc_callback.h">
+    <None Include="src\config\conf_clocks.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\drivers\tcc\quick_start\qs_tcc_basic.h">
+    <None Include="src\config\conf_winc.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\drivers\tcc\quick_start_callback\qs_tcc_callback.h">
+    <None Include="src\config\conf_extint.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\drivers\tcc\tcc.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\tcc\quick_start_dma\qs_tcc_dma.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\tcc\quick_start_faultx\qs_tcc_faultx.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\tcc\quick_start_timer\qs_tcc_timer.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\tcc\quick_start_buffering\qs_tcc_buffering.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\tcc\quick_start_faultn\qs_tcc_faultn.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\sam0\drivers\tcc\tcc.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ASF\sam0\drivers\tcc\tcc_callback.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\sam0\drivers\sercom\usart\quick_start_dma\qs_usart_dma_use.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\usart\usart.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\usart\quick_start_callback\qs_usart_callback.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\usart\usart_interrupt.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\usart\quick_start\qs_usart_basic_use.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\usart\quick_start_lin\qs_lin.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\sam0\drivers\sercom\usart\usart.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ASF\sam0\drivers\sercom\usart\usart_interrupt.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\sam0\drivers\sercom\i2c\quick_start_master_dma\qs_i2c_master_dma.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\i2c\i2c_master.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\i2c\quick_start_master\qs_i2c_master_basic_use.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\i2c\quick_start_master_callback\qs_i2c_master_callback.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\i2c\i2c_common.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\sercom\i2c\i2c_master_interrupt.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\sam0\drivers\sercom\sercom.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\sam0\drivers\sercom\sercom.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\sam0\drivers\sercom\sercom_interrupt.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\sam0\drivers\sercom\sercom_pinout.h">
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\WINC1500_SW_API.chm">
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\sam0\drivers\sercom\sercom_interrupt.h">
       <SubType>compile</SubType>
     </None>
+    <None Include="src\ASF\sam0\utils\linker_scripts\saml21\gcc\saml21j18b_flash.ld">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\utils\make\Makefile.sam.in">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\utils\stdio\stdio_serial\stdio_serial.h">
+      <SubType>compile</SubType>
+    </None>
     <None Include="src\ASF\common\services\serial\serial.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\spi.h">
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\common\services\serial\sam0_usart\usart_serial.h">
       <SubType>compile</SubType>
     </None>
-    <Compile Include="src\ASF\sam0\drivers\nvm\nvm.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\ASF\sam0\drivers\port\port.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\sam0\utils\stdio\stdio_serial\stdio_serial.h">
+    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_dma\qs_spi_dma_use.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\drivers\port\port.h">
+    <None Include="src\ASF\sam0\utils\preprocessor\stringz.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\drivers\port\quick_start\qs_port_basic.h">
+    <None Include="src\ASF\sam0\drivers\sercom\spi\spi_interrupt.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\drivers\nvm\nvm.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\nvm\quick_start_basic\qs_nvm_basic.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\asf.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\common2\boards\user_board\init.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\common\utils\interrupt\interrupt_sam_nvic.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\system\clock\clock_saml21\clock_config_check.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\system\interrupt\system_interrupt.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\utils\linker_scripts\saml21\gcc\saml21g18b_flash.ld">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\utils\make\Makefile.sam.in">
+    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_master_callback\qs_spi_master_callback.h">
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\thirdparty\CMSIS\ATMEL-disclaimer.txt">
@@ -1530,82 +1040,241 @@
     <None Include="src\ASF\thirdparty\CMSIS\CMSIS_END_USER_LICENCE_AGREEMENT.pdf">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\thirdparty\CMSIS\Lib\GCC\libarm_cortexM0l_math.a">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\thirdparty\CMSIS\Lib\license.txt">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\thirdparty\CMSIS\README.txt">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\config\conf_board.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\system\clock\clock.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\system\system.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\thirdparty\CMSIS\Include\arm_math.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\utils\preprocessor\mrepeat.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\system\power\power_sam_l\power.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\utils\preprocessor\preprocessor.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\thirdparty\CMSIS\Include\core_cmFunc.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\config\conf_clocks.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\system\clock\clock_saml21\clock_feature.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\boards\board.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\utils\preprocessor\stringz.h">
-      <SubType>compile</SubType>
-    </None>
     <None Include="src\ASF\thirdparty\CMSIS\Include\core_cmInstr.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\utils\status_codes.h">
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\include\m2m_ota.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\common2\boards\user_board\user_board.h">
+    <None Include="src\ASF\sam0\drivers\port\quick_start\qs_port_basic.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\drivers\system\pinmux\pinmux.h">
+    <None Include="src\ASF\sam0\drivers\port\port.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\utils\header_files\io.h">
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\include\m2m_ate_mode.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\utils\preprocessor\mrecursion.h">
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\include\m2m_crypto.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\sam0\utils\compiler.h">
+    <None Include="src\ASF\sam0\drivers\system\clock\clock_saml21\clock_config_check.h">
       <SubType>compile</SubType>
     </None>
-    <None Include="src\ASF\common\utils\parts.h">
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\include\m2m_ssl.h">
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\thirdparty\CMSIS\Include\core_cm0plus.h">
       <SubType>compile</SubType>
     </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\programmer\programmer_apis.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\usart\quick_start\qs_usart_basic_use.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\include\m2m_wifi.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\sercom.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\usart\quick_start_lin\qs_lin.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\utils\preprocessor\tpaste.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\include\ecc_types.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common2\services\delay\sam0\systick_counter.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\utils\interrupt\interrupt_sam_nvic.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\system\reset\reset_sam_l\reset.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\include\m2m_periph.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\programmer\programmer.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\utils\preprocessor\mrepeat.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\thirdparty\CMSIS\Include\core_cmFunc.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\system\clock\clock.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\boards\board.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\common\include\nm_debug.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\socket\include\m2m_socket_host_if.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\socket\source\socket_internal.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\system\pinmux\quick_start\qs_pinmux_basic.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\system\clock\clock_saml21\clock_feature.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\system\system.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common2\services\delay\delay.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\common2\services\delay\sam0\systick_counter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\bsp\source\nm_bsp_saml21.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\common\include\nm_common.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_slave_callback\qs_spi_slave_callback.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\usart\quick_start_callback\qs_usart_callback.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\spi_flash\include\spi_flash_map.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\extint\extint.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\system\interrupt\system_interrupt_saml21\system_interrupt_features.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\system\power\power_sam_l\power.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\extint\extint_callback.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\spi_flash\include\flexible_flash.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\driver\include\m2m_types.h">
+      <SubType>compile</SubType>
+    </None>
     <None Include="src\ASF\common\utils\interrupt.h">
       <SubType>compile</SubType>
     </None>
+    <None Include="src\ASF\sam0\drivers\sercom\usart\usart_interrupt.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\system\pinmux\pinmux.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_slave\qs_spi_slave_basic.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\thirdparty\CMSIS\Include\arm_math.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\utils\preprocessor\mrecursion.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\spi\quick_start_master\qs_spi_master_basic.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\utils\parts.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\utils\header_files\io.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\sercom_pinout.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\system\interrupt\system_interrupt.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\utils\status_codes.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\spi_flash\include\spi_flash.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\utils\compiler.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\usart\quick_start_dma\qs_usart_dma_use.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\socket\include\socket.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\system\clock\gclk.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\drivers\sercom\usart\usart.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam0\utils\preprocessor\preprocessor.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\components\wifi\winc1500\host_drv\bus_wrapper\include\nm_bus_wrapper.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\bus_wrapper\source\nm_bus_wrapper_saml21.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\common\source\nm_common.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\socket\source\socket.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\spi_flash\source\flexible_flash.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\common\components\wifi\winc1500\host_drv\spi_flash\source\spi_flash.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\ASF\common\utils\interrupt\interrupt_sam_nvic.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\drivers\extint\extint_callback.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\drivers\extint\extint_sam_l_c\extint.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\drivers\port\port.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\drivers\sercom\sercom.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\drivers\sercom\sercom_interrupt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\drivers\sercom\spi\spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\drivers\sercom\spi\spi_interrupt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\drivers\sercom\usart\usart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ASF\sam0\drivers\sercom\usart\usart_interrupt.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\ASF\sam0\drivers\system\clock\clock_saml21\clock.c">
@@ -1614,18 +1283,6 @@
     <Compile Include="src\ASF\sam0\drivers\system\clock\clock_saml21\gclk.c">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="src\ASF\sam0\drivers\system\pinmux\quick_start\qs_pinmux_basic.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\system\reset\reset_sam_l\reset.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\system\interrupt\system_interrupt_saml21\system_interrupt_features.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam0\drivers\system\clock\gclk.h">
-      <SubType>compile</SubType>
-    </None>
     <Compile Include="src\ASF\sam0\drivers\system\interrupt\system_interrupt.c">
       <SubType>compile</SubType>
     </Compile>
@@ -1635,15 +1292,27 @@
     <Compile Include="src\ASF\sam0\drivers\system\system.c">
       <SubType>compile</SubType>
     </Compile>
-    <None Include="src\ASF\sam0\utils\preprocessor\tpaste.h">
+    <Compile Include="src\ASF\sam0\utils\stdio\read.c">
       <SubType>compile</SubType>
-    </None>
+    </Compile>
+    <Compile Include="src\ASF\sam0\utils\stdio\write.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\ASF\sam0\utils\syscalls\gcc\syscalls.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\main.c">
+    <Compile Include="src\serial_bridge_ultra.c">
       <SubType>compile</SubType>
     </Compile>
+    <None Include="src\ASF\thirdparty\CMSIS\Lib\GCC\libarm_cortexM0l_math.a">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\thirdparty\CMSIS\Lib\license.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\thirdparty\CMSIS\README.txt">
+      <SubType>compile</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
