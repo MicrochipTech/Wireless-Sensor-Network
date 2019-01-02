@@ -652,7 +652,9 @@ MiWi protocol supports three network topologies
 
 **Demo Introduction**
 Temperature of rooms spread across a huge resort was monitored using the MiWi Star Network Topology.
+
 ![](https://i.imgur.com/T5per0S.jpg)
+
 A typical MiWi Application can be developed by having 2 components.
 Pan Coordinator and End Device. End Devices can FFD/RFD type. RFD end devices were used for the purpose of this demo because of the capability to go to sleep.
 End Device with Temperature sensor (running on batteries) was used to demonstrate the advantages of 
