@@ -595,6 +595,7 @@ To add the API for this demo, go to Applications ? XXXX ? Payload Formats
 XXXX denotes your Application Name chosen
 
 	Go to Decoder Section and save the below decoder function
+	
 	Decoder Function:
 	--------------------------------------
 		function Decoder(bytes, port) {
