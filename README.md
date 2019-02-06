@@ -765,7 +765,7 @@ Note: Firmware Update project is not available for SAMR30 Xplained Pro currently
 WINC1500_FIRMWARE_UPDATE_PROJECT2\src\firmware\tls_cert_store
 		- Add the signer CA “.cer” to: “make sure there is no other CA”
 WINC1500_FIRMWARE_UPDATE_PROJECT2\src\firmware\tls_cert_store\CA
-		Add AWS root cert "root-ca"to
+		- Add AWS root cert "root-ca"to
 WINC1500_FIRMWARE_UPDATE_PROJECT2\src\firmware\Tools\root_certificate_downloader\binary
 		- Copy Paster Items
 			- Copy and paste file (replace) *download_all.bat* from "\MiWi\WINC1500 FW update R30 XPRO" to "\WINC1500_FIRMWARE_UPDATE_PROJECT2\src\firmware"
