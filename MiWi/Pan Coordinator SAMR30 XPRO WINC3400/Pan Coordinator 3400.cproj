@@ -623,10 +623,38 @@
       <Value>TRX_REG_RAW_VALUE</Value>
       <Value>SPI_CALLBACK_MODE=false</Value>
       <Value>ANTENNA_DIVERSITY=1</Value>
+      <Value>BLE_DEVICE_ROLE=BLE_PERIPHERAL</Value>
+      <Value>TCC_ASYNC=true</Value>
+      <Value>CONF_WINC_USE_SPI=true</Value>
+      <Value>ATCA_HAL_I2C</Value>
+      <Value>I2C_MASTER_CALLBACK_MODE=true</Value>
+      <Value>DEBUG_SUPPORT</Value>
+      <Value>RTC_COUNT_ASYNC=true</Value>
+      <Value>WDT_CALLBACK_MODE=true</Value>
     </ListValues>
   </armgcc.compiler.symbols.DefSymbols>
   <armgcc.compiler.directories.IncludePaths>
     <ListValues>
+      <Value>../src/config</Value>
+      <Value>../src</Value>
+      <Value>../src/ASF/common/components/wifi/winc3400/wifi_drv</Value>
+      <Value>../src/ASF/common/components/wifi/winc3400/ble/onchip_profiles/wifi_prov</Value>
+      <Value>../src/ASF/common/components/wifi/winc3400/ble</Value>
+      <Value>../src/ASF/common/components/wifi/winc3400/ble/utils</Value>
+      <Value>../src/ASF/common/components/wifi/winc3400/ble/atmel_ble_api</Value>
+      <Value>../src/ASF/common/components/wifi/winc3400/ble/ble_services/ble_mgr</Value>
+      <Value>../src/ASF/sam0/drivers/port</Value>
+      <Value>../src/ASF/sam0/utils</Value>
+      <Value>../src/ASF/sam0/utils/header_files</Value>
+      <Value>../src/ASF/sam0/utils/preprocessor</Value>
+      <Value>../src/ASF/thirdparty/CMSIS/Include</Value>
+      <Value>../src/ASF/sam0/drivers/tcc</Value>
+      <Value>../src/ASF/thirdparty/CMSIS/Lib/GCC</Value>
+      <Value>../src/ASF/common/utils</Value>
+      <Value>../src/ASF/sam0/utils/cmsis/samr30/include</Value>
+      <Value>../src/ASF/sam0/utils/cmsis/samr30/source</Value>
+      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
       <Value>../src/ASF/thirdparty/wireless/avr2025_mac/apps/tal/performance_analyzer</Value>
       <Value>../src/ASF/thirdparty/wireless/avr2025_mac/apps/tal/performance_analyzer/inc</Value>
       <Value>../src/ASF/thirdparty/wireless/avr2025_mac/include</Value>
@@ -637,29 +665,18 @@
       <Value>../src/ASF/thirdparty/wireless/services/common_hw_timer</Value>
       <Value>../src/ASF/thirdparty/wireless/services/common_hw_timer/sam0</Value>
       <Value>../src/ASF/sam0/drivers/tc</Value>
-      <Value>../src/ASF/sam0/utils</Value>
-      <Value>../src/ASF/sam0/utils/header_files</Value>
-      <Value>../src/ASF/sam0/utils/preprocessor</Value>
-      <Value>../src/ASF/thirdparty/CMSIS/Include</Value>
-      <Value>../src/ASF/thirdparty/CMSIS/Lib/GCC</Value>
-      <Value>../src/ASF/common/utils</Value>
-      <Value>../src/ASF/sam0/utils/cmsis/samr30/include</Value>
-      <Value>../src/ASF/sam0/utils/cmsis/samr30/source</Value>
       <Value>../src/ASF/sam0/drivers/system</Value>
       <Value>../src/ASF/sam0/drivers/system/clock/clock_samr30</Value>
       <Value>../src/ASF/sam0/drivers/system/clock</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt</Value>
       <Value>../src/ASF/sam0/drivers/system/interrupt/system_interrupt_samr30</Value>
-      <Value>../src/ASF/sam0/drivers/system/pinmux</Value>
       <Value>../src/ASF/sam0/drivers/system/power/power_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/power</Value>
       <Value>../src/ASF/sam0/drivers/system/reset/reset_sam_l</Value>
       <Value>../src/ASF/sam0/drivers/system/reset</Value>
-      <Value>../src/ASF/sam0/drivers/port</Value>
       <Value>../src/ASF/thirdparty/wireless/services/trx_access</Value>
       <Value>../src/ASF/common2/services/delay</Value>
       <Value>../src/ASF/common2/services/delay/sam0</Value>
-      <Value>../src/ASF/sam0/drivers/sercom/spi</Value>
       <Value>../src/ASF/sam0/drivers/sercom</Value>
       <Value>../src/ASF/sam0/drivers/extint</Value>
       <Value>../src/ASF/thirdparty/wireless/avr2025_mac/source/tal/inc</Value>
@@ -674,8 +691,17 @@
       <Value>../src/ASF/sam0/boards</Value>
       <Value>../src/ASF/common/boards</Value>
       <Value>../src/ASF/thirdparty/wireless/avr2025_mac/apps/tal/performance_analyzer/samr30_xplained_pro</Value>
-      <Value>../src</Value>
-      <Value>../src/config</Value>
+      <Value>../src/ASF/thirdparty/AWS_SDK</Value>
+      <Value>../src/CryptoAuth/lib</Value>
+      <Value>../src/cJSON</Value>
+      <Value>../src/ASF/thirdparty/AWS_SDK/AWS_SDK/aws_mqtt_embedded_client_lib</Value>
+      <Value>../src/ASF/thirdparty/AWS_SDK/AWS_SDK/aws_iot_src/protocol/mqtt/aws_iot_embedded_client_wrapper/platform_samd21/common</Value>
+      <Value>../src/ASF/sam0/drivers/sercom/i2c</Value>
+      <Value>../src/ASF/common/components/wifi/winc3400/wifi_drv/driver/include</Value>
+      <Value>../src/ASF/sam0/drivers/wdt</Value>
+      <Value>../src/ASF/sam0/drivers/rtc/rtc_sam_l_c</Value>
+      <Value>../src/ASF/sam0/drivers/rtc</Value>
+      <Value>../src/rtc</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -699,6 +725,7 @@
     </ListValues>
   </armgcc.linker.libraries.LibrarySearchPaths>
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
+  <armgcc.linker.memorysettings.ExternalRAM />
   <armgcc.linker.miscellaneous.LinkerFlags>-Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam0/utils/linker_scripts/samr30/gcc/samr30g18a_flash.ld</armgcc.linker.miscellaneous.LinkerFlags>
   <armgcc.assembler.general.IncludePaths>
     <ListValues>
