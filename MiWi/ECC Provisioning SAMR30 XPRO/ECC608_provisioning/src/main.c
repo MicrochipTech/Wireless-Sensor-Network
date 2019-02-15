@@ -73,6 +73,10 @@ int main (void)
     // Do the device-connected checks
     status = detect_crypto_device();
 	printDevDetectStatus(status);
+	
+	printf("press SW0 to start provisioning\r\n");
+	while( port_pin_get_input_level(SW0_PIN) != SW0_ACTIVE );
+		
 	if (status != ATCA_SUCCESS)
 	{
 		status = preconfigure_crypto_device();

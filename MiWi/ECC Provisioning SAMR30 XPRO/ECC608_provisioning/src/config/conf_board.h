@@ -52,6 +52,11 @@
 #define GREEN_LED			PIN_PA15
 #define RED_LED				PIN_PA14
 
+#define SW0_PIN				PIN_PA28
+#define SW0_ACTIVE			false
+#define LED0_PIN			PIN_PA19
+#define LED1_PIN			PIN_PA18
+
 #define SW1_PIN				PIN_PA11
 #define SW1_ACTIVE			true
 
