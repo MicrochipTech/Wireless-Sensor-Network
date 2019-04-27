@@ -312,7 +312,7 @@
         <documentation help="http://asf.atmel.com/docs/3.32.0/thirdparty.wireless.avr2025_mac.apps.tal.performance_analyzer.samr30_xplained_pro_rf212b/html/index.html" />
         <offline-documentation help="" />
         <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.36.1" />
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.38.0" />
         </dependencies>
         <project id="thirdparty.wireless.avr2025_mac.apps.tal.performance_analyzer.samr30_xplained_pro_rf212b" value="Add" config="" content-id="Atmel.ASF" />
         <board id="board.samr30_xplained_pro" value="Add" config="" content-id="Atmel.ASF" />

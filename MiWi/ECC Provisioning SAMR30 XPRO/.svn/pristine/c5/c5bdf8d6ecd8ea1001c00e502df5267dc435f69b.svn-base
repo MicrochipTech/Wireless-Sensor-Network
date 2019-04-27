@@ -1,4 +1,0 @@
-src/bme280/bme280.d src/bme280/bme280.o: ../src/bme280/bme280.c \
- ../src/bme280/bme280.h
-
-../src/bme280/bme280.h:
