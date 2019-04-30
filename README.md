@@ -167,7 +167,7 @@ and
 
 ### Flask data application
 First, install flask on your EC2 instance:
-`$ pip install Flask`
+`$ pip3 install Flask`
 
 copy the "Server/wsn_server.py" file to the EC2 instance. 
 
